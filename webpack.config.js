@@ -7,6 +7,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, "build"),
     filename: "bundle[fullhash].js",
+    publicPath: '/',
   },
   mode: "development",
   devServer: {
@@ -14,6 +15,7 @@ module.exports = {
     open: true,
     compress: true,
     writeToDisk: true,
+    historyApiFallback: true,
   },
   devtool: "eval-source-map",
   module: {
@@ -36,6 +38,7 @@ module.exports = {
           // Compiles Sass to CSS
           "sass-loader",
         ],
+        exclude: /node_modules/,
       },
     ],
   },
