@@ -13,7 +13,7 @@ module.exports = {
   mode: "development",
   devServer: {
     https: true,
-    port: 3000,
+    port: 8000,
     open: true,
     compress: true,
     writeToDisk: true,
