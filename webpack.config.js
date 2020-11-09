@@ -1,6 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
+
 
 module.exports = {
   entry: "./src/index.js",
@@ -11,7 +13,7 @@ module.exports = {
   },
   mode: "development",
   devServer: {
-    port: 8000,
+    port: 3000,
     open: true,
     compress: true,
     writeToDisk: true,
@@ -47,5 +49,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),
+    new Dotenv()
   ],
 };
