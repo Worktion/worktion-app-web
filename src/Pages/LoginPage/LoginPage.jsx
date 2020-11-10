@@ -62,8 +62,8 @@ const LoginPage = () => {
         content={error}
         closeError={closeError}
       ></CustomAlert>
-      <Container>
-        <Card className=" m-5">
+      <Container className='d-flex justify-content-center'>
+        <Card className=" m-5 d-inline-flex">
           <Card.Header as="h5">Iniciar sesión</Card.Header>
           <Card.Body>
             <Form className="m-3">
