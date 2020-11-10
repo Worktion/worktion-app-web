@@ -1,6 +1,14 @@
-import { setToken, getToken, deleteToken } from "../helpers/auth-helper";
+import {
+  setToken,
+  deleteToken,
+  setRefreshToken,
+  getRefreshToken,
+  deleteRefreshToken,
+  refreshAccessToken,
+} from "../helpers/auth-helper";
 import React, { useState, useEffect, useMemo } from "react";
 import Axios from "axios";
+import jwt from "jwt-decode";
 
 const UserContext = React.createContext();
 
@@ -10,15 +18,20 @@ export function UserProvider(props) {
 
   useEffect(() => {
     async function loadUser() {
-      if (!getToken()) {
-        setLoadingUser(false);
+      if (!getRefreshToken()) {
         return;
       }
 
       try {
-        const { data: user } = await Axios.get("/auth/");
-        setUser(user);
-        setLoadingUser(false);
+        const { exp, user_id } = jwt(getRefreshToken());
+        if (Date.now() >= exp * 1000) {
+          deleteToken();
+          deleteRefreshToken();
+          setLoadingUser(false);
+        } else {
+          await refreshAccessToken();
+          setUser({ id: user_id });
+        }
       } catch (error) {
         console.log(error);
       }
@@ -27,12 +40,14 @@ export function UserProvider(props) {
   }, []);
 
   async function login(username, password) {
-    const { data } = await Axios.post("/login/", {
-      username: username,
+    const { data } = await Axios.post("/api/token/", {
+      email: username,
       password: password,
     });
-    setUser(data.user);
-    setToken(data.token);
+    const { user_id } = jwt(data.access);
+    setToken(data.access);
+    setRefreshToken(data.refresh);
+    setUser({ id: user_id, email: username });
   }
 
   async function signup(user) {
@@ -42,7 +57,7 @@ export function UserProvider(props) {
   }
 
   function logout() {
-    setUser(null);yarn 
+    setUser(null);
     deleteToken();
   }
 
@@ -64,6 +79,5 @@ export function useUser() {
   if (!context) {
     throw new Error("useUser must be in UserContext Provider");
   }
-
   return context;
 }

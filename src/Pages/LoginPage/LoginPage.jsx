@@ -1,8 +1,9 @@
 import React from "react";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import logo from "../../images/loginImage.png";
-
+import { useUser } from "../../context/user-context";
 function LoginPage() {
+  const { loadUser, user, login } = useUser();
   return (
     <div
       style={{
