@@ -4,10 +4,11 @@ import { setAxiosInterceptors } from "../../helpers/auth-helper";
 import { UserProvider, useUser } from "../../context/user-context";
 import LoginPage from "../../Pages/LoginPage/LoginPage";
 import HomePage from "../../Pages/HomePage/HomePage"
+import RegisterPage from "../../Pages/RegisterPage/RegisterPage"
 setAxiosInterceptors();
 
 function App() {
-  const { loadUser, user, login } = useUser();
+  const { loadUser, user } = useUser();
   return (
     <div>
       {user ? <LoginRoutes></LoginRoutes> : <LogoutRoutes></LogoutRoutes>}
@@ -41,7 +42,7 @@ const LogoutRoutes = () => {
         <LoginPage></LoginPage>
       </Route>
       <Route exact path="/register">
-        <h1>Nueva rutina</h1>
+        <RegisterPage></RegisterPage>
       </Route>
       <Route exact path="/:username/routine/:idRoutine/public">
         <h1>Rutina compartida publicamente</h1>
