@@ -27,11 +27,12 @@ export function UserProvider(props) {
         if (Date.now() >= exp * 1000) {
           deleteToken();
           deleteRefreshToken();
-          setLoadingUser(false);
         } else {
           await refreshAccessToken();
           setUser({ id: user_id });
         }
+
+        setLoadingUser(false);
       } catch (error) {
         console.log(error);
       }
