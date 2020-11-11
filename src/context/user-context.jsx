@@ -51,14 +51,18 @@ export function UserProvider(props) {
   }
 
   async function signup(user) {
-    const { data } = await Axios.post("/user", user);
-    setUser(data.user);
-    setToken(data.token);
+    try {
+      const { data } = await Axios.post("/api/users/registration/", user); 
+      return;
+    } catch (error) {
+      throw error.response;
+    }
   }
 
   function logout() {
     setUser(null);
     deleteToken();
+    deleteRefreshToken();
   }
 
   const value = useMemo(() => {
