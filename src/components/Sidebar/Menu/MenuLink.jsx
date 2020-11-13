@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -38,7 +38,6 @@ const MenuLink = ({ id, title, active, handleClick, icon, path }) => {
   return (
     <StyledLink id={id} to={path}>
       <Container id={id} active={active} onClick={handleClick}>
-        {" "}
         {title}
       </Container>
     </StyledLink>

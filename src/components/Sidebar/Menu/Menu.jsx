@@ -22,9 +22,8 @@ const Menu = () => {
     setState({
       [id]: true,
     });
-    console.log("Asiganndo estado");
   };
-  console.log(state);
+  
   return (
     <Container>
       <MenuLink

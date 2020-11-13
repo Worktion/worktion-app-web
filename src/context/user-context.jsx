@@ -26,10 +26,10 @@ export function UserProvider(props) {
       }
 
       try {
-        const { accessExp, user_id } = jwt(getToken());
-        if (tokenExpirated(accessExp)) {
-          const { refreshExp } = jwt(getRefreshToken());
-          if (tokenExpirated(refreshExp)) {
+        const { exp, user_id } = jwt(getToken());
+        if (tokenExpirated(exp)) {
+          const { exp } = jwt(getRefreshToken());
+          if (tokenExpirated(exp)) {
             deleteToken();
             deleteRefreshToken();
           } else {

@@ -6,7 +6,7 @@ import LoginPage from "../../Pages/LoginPage/LoginPage";
 import HomePage from "../../Pages/HomePage/HomePage";
 import RegisterPage from "../../Pages/RegisterPage/RegisterPage";
 import NewRoutinePage from "../../Pages/NewRoutinePage/NewRoutinePage";
-import Dashboard from "../Dashboard/Dashboard";
+import Dashboard from "../../container/Dashboard/Dashboard";
 import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
 
 setAxiosInterceptors();
@@ -19,9 +19,7 @@ function App() {
   }
 
   return (
-    <div>
-      {user ? <LoginRoutes></LoginRoutes> : <LogoutRoutes></LogoutRoutes>}
-    </div>
+    <>{user ? <LoginRoutes></LoginRoutes> : <LogoutRoutes></LogoutRoutes>}</>
   );
 }
 

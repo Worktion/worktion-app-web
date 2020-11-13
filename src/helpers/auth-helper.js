@@ -1,5 +1,5 @@
 import Axios from "axios";
-import jwt from "jwt-decode";
+import jwt from "jwt-decode"; 
 
 export function setToken(token) {
   localStorage.setItem(process.env.TOKEN_KEY, token);
@@ -32,9 +32,9 @@ export async function refreshAccessToken() {
   setToken(data.access);
 }
 
-export function tokenExpirated(exp){
-  const isExpirated = false;
-  if(Date.now() >= exp * 1000){
+export function tokenExpirated(exp) {
+  let isExpirated = false;
+  if (Date.now() >= exp * 1000) {
     isExpirated = true;
   }
   return isExpirated;
