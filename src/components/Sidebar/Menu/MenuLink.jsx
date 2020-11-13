@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   border-left: 3px solid ${(props) => (props.active ? "#000" : "transparent")};
@@ -19,25 +19,29 @@ const Container = styled.div`
   }
 `;
 
-const Span = styled.span`
-  font-size: 1rem;
-  margin-right: 1rem;
-`;
-
-const Title = styled.h1`
+const StyledLink = styled(Link)`
   font-size: 0.9rem;
   font-weight: 300;
   color: ${(props) => (props.active ? "#000" : "#AAA5A5")};
+  &:focus,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+  &:hover {
+    color: #000;
+  }
 `;
 
-const MenuLink = ({ id, title, active, handleClick, icon }) => {
+const MenuLink = ({ id, title, active, handleClick, icon, path }) => {
   return (
-    <Container id={id} active={active} onClick={handleClick}>
- 
-      <Title id={id} active={active}>
+    <StyledLink id={id} to={path}>
+      <Container id={id} active={active} onClick={handleClick}>
+        {" "}
         {title}
-      </Title>
-    </Container>
+      </Container>
+    </StyledLink>
   );
 };
 

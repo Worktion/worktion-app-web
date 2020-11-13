@@ -32,6 +32,14 @@ export async function refreshAccessToken() {
   setToken(data.access);
 }
 
+export function tokenExpirated(exp){
+  const isExpirated = false;
+  if(Date.now() >= exp * 1000){
+    isExpirated = true;
+  }
+  return isExpirated;
+}
+
 export function setAxiosInterceptors() {
   Axios.interceptors.request.use(function (config) {
     const token = getToken();

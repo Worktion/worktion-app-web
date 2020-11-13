@@ -5,6 +5,7 @@ import { UserProvider, useUser } from "../../context/user-context";
 import LoginPage from "../../Pages/LoginPage/LoginPage";
 import HomePage from "../../Pages/HomePage/HomePage";
 import RegisterPage from "../../Pages/RegisterPage/RegisterPage";
+import NewRoutinePage from "../../Pages/NewRoutinePage/NewRoutinePage";
 import Dashboard from "../Dashboard/Dashboard";
 import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
 
@@ -28,10 +29,10 @@ const LoginRoutes = () => {
   return (
     <Switch>
       <Route exact path="/home">
-        <Dashboard></Dashboard>
+        <Dashboard children={<HomePage />}></Dashboard>
       </Route>
       <Route exact path="/newRoutine">
-        <h1>Nueva rutina</h1>
+        <Dashboard children={<NewRoutinePage />}></Dashboard>
       </Route>
       <Route exact path="/:username/routineDetail/:idRoutine">
         <h1>Detalle de la rutina de usuario</h1>

@@ -1,14 +1,14 @@
 import React from "react";
 import SideBar from "../Sidebar/Sidebar";
 import HomePage from "../../Pages/HomePage/HomePage";
-import { Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
-const Dashboard = () => {
+const Dashboard = ({children}) => {
   return (
     <div>
       <Container>
         <SideBar />
-        <HomePage></HomePage>
+        {children}
       </Container>
     </div>
   );

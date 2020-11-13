@@ -2,9 +2,11 @@ import {
   setToken,
   deleteToken,
   setRefreshToken,
+  getToken,
   getRefreshToken,
   deleteRefreshToken,
   refreshAccessToken,
+  tokenExpirated,
 } from "../helpers/auth-helper";
 import React, { useState, useEffect, useMemo } from "react";
 import Axios from "axios";
@@ -18,17 +20,23 @@ export function UserProvider(props) {
 
   useEffect(() => {
     async function loadUser() {
-      if (!getRefreshToken()) {
+      if (!getToken()) {
+        setLoadingUser(false);
         return;
       }
 
       try {
-        const { exp, user_id } = jwt(getRefreshToken());
-        if (Date.now() >= exp * 1000) {
-          deleteToken();
-          deleteRefreshToken();
+        const { accessExp, user_id } = jwt(getToken());
+        if (tokenExpirated(accessExp)) {
+          const { refreshExp } = jwt(getRefreshToken());
+          if (tokenExpirated(refreshExp)) {
+            deleteToken();
+            deleteRefreshToken();
+          } else {
+            await refreshAccessToken();
+            setUser({ id: user_id });
+          }
         } else {
-          await refreshAccessToken();
           setUser({ id: user_id });
         }
 
@@ -53,7 +61,7 @@ export function UserProvider(props) {
 
   async function signup(user) {
     try {
-      const { data } = await Axios.post("/api/users/registration/", user); 
+      const { data } = await Axios.post("/api/users/registration/", user);
       return;
     } catch (error) {
       throw error.response;

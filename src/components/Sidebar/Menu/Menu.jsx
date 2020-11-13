@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MenuLink from "./MenuLink";
 import styled from "styled-components";
+import { useUser } from "../../../context/user-context";
 
 const Container = styled.div`
   margin-top: 2rem;
@@ -8,6 +9,8 @@ const Container = styled.div`
 `;
 
 const Menu = () => {
+  const { logout } = useUser();
+
   const [state, setState] = useState({
     myRoutineSelected: false,
     newRoutineSelected: false,
@@ -19,8 +22,9 @@ const Menu = () => {
     setState({
       [id]: true,
     });
+    console.log("Asiganndo estado");
   };
-
+  console.log(state);
   return (
     <Container>
       <MenuLink
@@ -28,18 +32,21 @@ const Menu = () => {
         title="Mis rutinas"
         active={state.myRoutineSelected}
         handleClick={handleSelected}
+        path="/home"
       />
       <MenuLink
         id="newRoutineSelected"
         title="Crear rutina"
         active={state.newRoutineSelected}
         handleClick={handleSelected}
+        path="/newRoutine"
       />
       <MenuLink
         id="logoutSelected"
         title="Cerrar sesión"
         active={state.logoutSelected}
-        handleClick={handleSelected}
+        handleClick={logout}
+        path="/"
       />
     </Container>
   );
