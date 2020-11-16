@@ -2,9 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import Menu from "./Menu/Menu";
 import Profile from "./Menu/Profile";
+import LogoWorktion from "../../images/LogoWorktion.png";
+
+
+const LogoImg = styled.img`
+  width: 100px;
+  height: 100px;
+`
 
 const Container = styled.div`
-  background-color: #f8f8f8;
+  background-color: #121212;  
+  opacity: 89%;
   position: fixed;
   left: 0;
   top: 0;
@@ -16,11 +24,14 @@ const Container = styled.div`
   z-index:100;
 `;
 
-const Sidebar = () => {
+const Sidebar = ({myRoutineItem, newRoutineItem}) => {
   return (
     <Container>
+    
+     <LogoImg src={LogoWorktion} alt="Logo worktion"></LogoImg>
+     
       <Profile></Profile>
-      <Menu />
+      <Menu myRoutineItem={myRoutineItem} newRoutineItem={newRoutineItem} />
     </Container>
   );
 };

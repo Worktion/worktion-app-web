@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import MenuLink from "./MenuLink";
 import styled from "styled-components";
 import { useUser } from "../../../context/user-context";
+import { FaPlusSquare, FaLayerGroup, FaSignOutAlt } from "react-icons/fa";
 
 const Container = styled.div`
   margin-top: 2rem;
   width: 100%;
 `;
 
-const Menu = () => {
+const Menu = ({ myRoutineItem, newRoutineItem }) => {
   const { logout } = useUser();
 
   const [state, setState] = useState({
-    myRoutineSelected: false,
-    newRoutineSelected: false,
+    myRoutineSelected: myRoutineItem,
+    newRoutineSelected: newRoutineItem,
     logoutSelected: false,
   });
 
@@ -23,27 +24,29 @@ const Menu = () => {
       [id]: true,
     });
   };
-  
+
   return (
     <Container>
       <MenuLink
         id="myRoutineSelected"
         title="Mis rutinas"
-        active={state.myRoutineSelected}
+        active={state.myRoutineSelected ? 1 : 0}
         handleClick={handleSelected}
+        icon={<FaLayerGroup size="2em" />}
         path="/home"
       />
       <MenuLink
         id="newRoutineSelected"
         title="Crear rutina"
-        active={state.newRoutineSelected}
+        active={state.newRoutineSelected ? 1 : 0}
         handleClick={handleSelected}
+        icon={<FaPlusSquare size="2em" />}
         path="/newRoutine"
       />
       <MenuLink
         id="logoutSelected"
         title="Cerrar sesión"
-        active={state.logoutSelected}
+        icon={<FaSignOutAlt size="2em"/>}
         handleClick={logout}
         path="/"
       />

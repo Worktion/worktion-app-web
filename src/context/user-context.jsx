@@ -34,10 +34,12 @@ export function UserProvider(props) {
             deleteRefreshToken();
           } else {
             await refreshAccessToken();
-            setUser({ id: user_id });
+            const data = await getUserinfo(user_id);
+            setUser(data);
           }
         } else {
-          setUser({ id: user_id });
+          const data = await getUserinfo(user_id);
+          setUser(data);
         }
 
         setLoadingUser(false);
@@ -47,6 +49,11 @@ export function UserProvider(props) {
     }
     loadUser();
   }, []);
+
+  const getUserinfo = async (id) => {
+    const { data } = await Axios.get("/api/users/" + id);
+    return data;
+  };
 
   async function login(username, password) {
     const { data } = await Axios.post("/api/token/", {

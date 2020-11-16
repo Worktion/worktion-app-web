@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-  border-left: 3px solid ${(props) => (props.active ? "#000" : "transparent")};
+  border-left: 3px solid
+    ${(props) => (props.active ? "#ff3b14" : "transparent")};
   width: 100%;
   padding: 0.3rem;
   padding-left: 2rem;
@@ -13,16 +14,17 @@ const Container = styled.div`
   align-items: center;
   margin-bottom: 1rem;
   transition: 0.2s all ease-in-out;
+  background-color: ${(props) => (props.active ? "#000" : null)};
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #000;
   }
 `;
 
 const StyledLink = styled(Link)`
   font-size: 0.9rem;
   font-weight: 300;
-  color: ${(props) => (props.active ? "#000" : "#AAA5A5")};
+  color: ${(props) => (props.active ? "#fff" : "grey")};
   &:focus,
   &:visited,
   &:link,
@@ -30,15 +32,21 @@ const StyledLink = styled(Link)`
     text-decoration: none;
   }
   &:hover {
-    color: #000;
+    color: #fff;
   }
+`;
+
+const StyledSpan = styled.span`
+  margin-left: 1rem;
+  font-size: 1.5em;
 `;
 
 const MenuLink = ({ id, title, active, handleClick, icon, path }) => {
   return (
-    <StyledLink id={id} to={path}>
+    <StyledLink to={path} active={active} >
       <Container id={id} active={active} onClick={handleClick}>
-        {title}
+        {icon}
+        <StyledSpan id={id} >{title}</StyledSpan>
       </Container>
     </StyledLink>
   );
