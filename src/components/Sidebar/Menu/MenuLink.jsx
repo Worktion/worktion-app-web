@@ -12,10 +12,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-top: ${(props) => (props.marginTop ? props.marginTop : "1rem")};
   transition: 0.2s all ease-in-out;
   background-color: ${(props) => (props.active ? "#000" : null)};
-
   &:hover {
     background-color: #000;
   }
@@ -25,6 +24,8 @@ const StyledLink = styled(Link)`
   font-size: 0.9rem;
   font-weight: 300;
   color: ${(props) => (props.active ? "#fff" : "grey")};
+  display: ${(props) => (props.display ? props.display : null)};
+  margin-top: ${(props) => (props.margintop ? props.margintop : null)};
   &:focus,
   &:visited,
   &:link,
@@ -41,12 +42,24 @@ const StyledSpan = styled.span`
   font-size: 1.5em;
 `;
 
-const MenuLink = ({ id, title, active, handleClick, icon, path }) => {
+const MenuLink = ({
+  id,
+  title,
+  active,
+  handleClick,
+  icon,
+  path,
+  margintop,
+}) => {
   return (
-    <StyledLink to={path} active={active} >
+    <StyledLink
+      to={path}
+      active={active}
+      margintop={margintop}
+    >
       <Container id={id} active={active} onClick={handleClick}>
         {icon}
-        <StyledSpan id={id} >{title}</StyledSpan>
+        <StyledSpan id={id}>{title}</StyledSpan>
       </Container>
     </StyledLink>
   );

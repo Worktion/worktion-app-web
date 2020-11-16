@@ -24,22 +24,28 @@ const ProfileName = styled.h1`
 const UserConfiIcon = styled(FaCog)`
   position: absolute;
   margin-right: 10rem;
-  border-radius: 0.3rem;
   color: #fff;
   opacity: 87%;
+
+  background-color: ${(props) => (props.active ? "#000" : null)};
+  width: ${(props) => (props.active ? "1.35rem" : null)};
+  height: ${(props) => (props.active ? "1.35rem" : null)};
+  border-bottom: ${(props) => (props.active ? "solid 1px #ff3b14" : null)};
   &:hover {
     background-color: #000;
     height: 1.35rem;
     width: 1.35rem;
+    border-bottom: solid 1px #ff3b14;
   }
 `;
 
-const Profile = () => {
+const Profile = ({ changeItemSelected, active }) => {
   const { user } = useUser();
   let history = useHistory();
 
   const handleClickEditProfile = (e) => {
     history.push("/editProfile");
+    changeItemSelected(false, false, true);
   };
 
   return (
@@ -54,6 +60,7 @@ const Profile = () => {
         size="1.2em"
         title="Configuración de usuario"
         onClick={handleClickEditProfile}
+        active={active ? 1 : 0}
       />
       {user.username.length <= 20 ? (
         <ProfileName>{user.username}</ProfileName>

@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Menu from "./Menu/Menu";
 import Profile from "./Menu/Profile";
 import LogoWorktion from "../../images/LogoWorktion.png";
 
-
 const LogoImg = styled.img`
   width: 100px;
   height: 100px;
-`
+`;
 
 const Container = styled.div`
-  background-color: #121212;  
+  background-color: #121212;
   opacity: 89%;
   position: fixed;
   left: 0;
@@ -21,17 +20,36 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index:100;
+  z-index: 100;
 `;
 
-const Sidebar = ({myRoutineItem, newRoutineItem}) => {
+const Sidebar = ({ myRoutineItem, newRoutineItem }) => {
+  const [state, setState] = useState({
+    myRoutineSelected: myRoutineItem,
+    newRoutineSelected: newRoutineItem,
+    configSelected: false,
+  });
+
+  const changeItemSelected = (myRoutineItem, newRoutineItem, configItem) => {
+    setState({
+      myRoutineSelected: myRoutineItem,
+      newRoutineSelected: newRoutineItem,
+      configSelected: configItem,
+    });
+  };
+
   return (
     <Container>
-    
-     <LogoImg src={LogoWorktion} alt="Logo worktion"></LogoImg>
-     
-      <Profile></Profile>
-      <Menu myRoutineItem={myRoutineItem} newRoutineItem={newRoutineItem} />
+      <LogoImg src={LogoWorktion} alt="Logo worktion"></LogoImg>
+      <Profile
+        changeItemSelected={changeItemSelected}
+        active={state.configSelected}
+      ></Profile>
+      <Menu
+        changeItemSelected={changeItemSelected}
+        myRoutineItem={state.myRoutineSelected ? 1 : 0}
+        newRoutineItem={state.newRoutineSelected ? 1 : 0}
+      />
     </Container>
   );
 };

@@ -7,22 +7,20 @@ import { FaPlusSquare, FaLayerGroup, FaSignOutAlt } from "react-icons/fa";
 const Container = styled.div`
   margin-top: 2rem;
   width: 100%;
+  height: 100%;
+  display: inline-flex;
+  flex-direction: column;
 `;
 
-const Menu = ({ myRoutineItem, newRoutineItem }) => {
+const Menu = ({ myRoutineItem, newRoutineItem, changeItemSelected }) => {
   const { logout } = useUser();
 
-  const [state, setState] = useState({
-    myRoutineSelected: myRoutineItem,
-    newRoutineSelected: newRoutineItem,
-    logoutSelected: false,
-  });
+  const handleMyroutineSelected = (e) => {
+    changeItemSelected(true, false, false);
+  };
 
-  const handleSelected = (e) => {
-    const { id } = e.target;
-    setState({
-      [id]: true,
-    });
+  const handleNewRoutineSelected = (e) => {
+    changeItemSelected(false, true, false);
   };
 
   return (
@@ -30,24 +28,25 @@ const Menu = ({ myRoutineItem, newRoutineItem }) => {
       <MenuLink
         id="myRoutineSelected"
         title="Mis rutinas"
-        active={state.myRoutineSelected ? 1 : 0}
-        handleClick={handleSelected}
+        active={myRoutineItem ? 1 : 0}
+        handleClick={handleMyroutineSelected}
         icon={<FaLayerGroup size="2em" />}
         path="/home"
       />
       <MenuLink
         id="newRoutineSelected"
         title="Crear rutina"
-        active={state.newRoutineSelected ? 1 : 0}
-        handleClick={handleSelected}
+        active={newRoutineItem ? 1 : 0}
+        handleClick={handleNewRoutineSelected}
         icon={<FaPlusSquare size="2em" />}
         path="/newRoutine"
       />
       <MenuLink
         id="logoutSelected"
         title="Cerrar sesión"
-        icon={<FaSignOutAlt size="2em"/>}
+        icon={<FaSignOutAlt size="2em" />}
         handleClick={logout}
+        margintop={"auto"}
         path="/"
       />
     </Container>
