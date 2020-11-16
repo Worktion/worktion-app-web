@@ -63,7 +63,8 @@ export function UserProvider(props) {
     const { user_id } = jwt(data.access);
     setToken(data.access);
     setRefreshToken(data.refresh);
-    setUser({ id: user_id, email: username });
+    const userData = await getUserinfo(user_id);
+    setUser(userData);
   }
 
   async function signup(user) {
