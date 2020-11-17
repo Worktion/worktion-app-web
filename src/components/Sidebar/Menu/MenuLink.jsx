@@ -14,9 +14,10 @@ const Container = styled.div`
   align-items: center;
   margin-top: ${(props) => (props.marginTop ? props.marginTop : "1rem")};
   transition: 0.2s all ease-in-out;
-  background-color: ${(props) => (props.active ? "#000" : null)};
+  background-color: ${(props) =>
+    props.active ? "rgb(26, 26, 26, 0.81)" : null};
   &:hover {
-    background-color: #000;
+    background-color: rgb(26, 26, 26, 0.81);
   }
 `;
 
@@ -52,11 +53,7 @@ const MenuLink = ({
   margintop,
 }) => {
   return (
-    <StyledLink
-      to={path}
-      active={active}
-      margintop={margintop}
-    >
+    <StyledLink to={path} active={active} margintop={margintop}>
       <Container id={id} active={active} onClick={handleClick}>
         {icon}
         <StyledSpan id={id}>{title}</StyledSpan>

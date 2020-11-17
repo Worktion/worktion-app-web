@@ -1,5 +1,9 @@
 $theme-colors: (
-  "chido": #121212,
+  "primary-black": rgb(26, 26, 26, 0.81),
+  "primary-white": rgb(255, 255, 255, 0.87),
+  "white-with-opacity":  rgb(255, 255, 255, 0.11),
+  "black-background": #121212,
+
 );
 
 @import "~bootstrap/scss/bootstrap";

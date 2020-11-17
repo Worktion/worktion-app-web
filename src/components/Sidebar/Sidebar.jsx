@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Menu from "./Menu/Menu";
 import Profile from "./Menu/Profile";
-import LogoWorktion from "../../images/LogoWorktion.png";
-
-const LogoImg = styled.img`
-  width: 100px;
-  height: 100px;
-`;
+import LogoWorktion from "../../components/LogoWorktion/LogoWorktion";
 
 const Container = styled.div`
   background-color: #121212;
@@ -40,7 +35,7 @@ const Sidebar = ({ myRoutineItem, newRoutineItem }) => {
 
   return (
     <Container>
-      <LogoImg src={LogoWorktion} alt="Logo worktion"></LogoImg>
+      <LogoWorktion />
       <Profile
         changeItemSelected={changeItemSelected}
         active={state.configSelected}

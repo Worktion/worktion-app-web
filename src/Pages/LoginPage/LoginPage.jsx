@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useUser } from "../../context/user-context";
 import { Form, Button, Card, Container, Navbar } from "react-bootstrap";
 import CustomAlert from "../../components/Alert/CustomAlert";
+import LogoWorktion from "../../components/LogoWorktion/LogoWorktion";
 
 const LoginPage = () => {
   const { login } = useUser();
@@ -51,37 +52,39 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      <Navbar expand="lg" variant="dark justify-content-center" bg="primary">
-        <Navbar.Text className="h2 text-white" href="#">
-          Worktion
-        </Navbar.Text>
-      </Navbar>
+    <div className="vh-100 w-100 bg-black-background">
       <CustomAlert
         variant={"danger"}
         content={error}
         closeError={closeError}
       ></CustomAlert>
       <Container className="d-flex justify-content-center">
-        <Card className=" m-5 d-inline-flex">
-          <Card.Header as="h5">Iniciar sesión</Card.Header>
-          <Card.Body>
-            <Form className="m-3">
+        <Card className=" m-5 d-inline-flex align-items-center bg-primary-black col-lg-8 ">
+          <LogoWorktion></LogoWorktion>
+          <h5 className="text-primary-white">¿Estás listo?</h5>
+          <Card.Body className="col-lg-12 d-flex flex-column justify-content-center">
+            <Form>
               <Form.Group controlId="email">
-                <Form.Label>Correo electrónico</Form.Label>
+                <Form.Label className="text-primary-white">
+                  Correo electrónico
+                </Form.Label>
                 <Form.Control
+                  className="bg-primary-white"
                   type="email"
                   placeholder="Ingresa tu correo electrónico"
                   onChange={onHandleChange}
                 />
-                <Form.Text className="text-muted">
+                <Form.Text className="text-primary-white">
                   Tu información se encuentra protegida
                 </Form.Text>
               </Form.Group>
 
               <Form.Group controlId="password">
-                <Form.Label>Contraseña</Form.Label>
+                <Form.Label className="text-primary-white">
+                  Contraseña
+                </Form.Label>
                 <Form.Control
+                  className="bg-primary-white"
                   autoComplete="on"
                   type="password"
                   placeholder="Contraseña"
@@ -89,17 +92,19 @@ const LoginPage = () => {
                 />
               </Form.Group>
               <Button
-                variant="primary"
+                variant="outline-success"
                 type="submit"
                 onClick={handleLoginClick}
+                size="lg"
+                block
               >
                 Iniciar sesión
               </Button>
-              <Link to="/register" className="link ml-5">
-                ¿Aún no tienes cuenta?
-              </Link>
             </Form>
           </Card.Body>
+          <Link to="/register" className="link text-primary-white ">
+            ¿Aún no tienes cuenta?
+          </Link>
         </Card>
       </Container>
     </div>
