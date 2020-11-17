@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import profilelg from "../../../images/profilelg.png";
 import { FaCog } from "react-icons/fa";
 import { useUser } from "../../../context/user-context";
 import ReactRoundedImage from "react-rounded-image";
 import { useHistory } from "react-router-dom";
+import defaultProfileImg from "../../../images/defaultProfileImg.png"
 
 const Container = styled.div`
   margin-top: 1rem;
@@ -51,7 +51,7 @@ const Profile = ({ changeItemSelected, active }) => {
   return (
     <Container>
       <ReactRoundedImage
-        image={profilelg}
+        image={user.cover ? user.cover : defaultProfileImg}
         roundedSize="0"
         imageWidth="90"
         imageHeight="90"
