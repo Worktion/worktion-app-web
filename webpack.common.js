@@ -10,17 +10,6 @@ module.exports = {
     filename: "bundle[fullhash].js",
     publicPath: "/",
   },
-  mode: "development",
-  devServer: {
-    https: true,
-    port: 3000,
-    open: true,
-    compress: true,
-    writeToDisk: true,
-    historyApiFallback: true,
-    contentBase: path.join(__dirname, "assets"),
-  },
-  devtool: "eval-source-map",
   module: {
     rules: [
       {
