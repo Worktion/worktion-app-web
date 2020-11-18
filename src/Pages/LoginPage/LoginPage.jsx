@@ -59,7 +59,7 @@ const LoginPage = () => {
         closeError={closeError}
       ></CustomAlert>
       <Container className="d-flex justify-content-center">
-        <Card className=" m-5 d-inline-flex align-items-center bg-primary-black col-lg-8 ">
+        <Card className=" m-5 d-inline-flex align-items-center bg-primary-surface-3dp col-lg-8 ">
           <LogoWorktion></LogoWorktion>
           <h5 className="text-primary-white">¿Estás listo?</h5>
           <Card.Body className="col-lg-12 d-flex flex-column justify-content-center">
@@ -69,7 +69,7 @@ const LoginPage = () => {
                   Correo electrónico
                 </Form.Label>
                 <Form.Control
-                  className="bg-primary-white"
+                  className="bg-primary-surface-8dp text-primary-white border-0"
                   type="email"
                   placeholder="Ingresa tu correo electrónico"
                   onChange={onHandleChange}
@@ -84,7 +84,7 @@ const LoginPage = () => {
                   Contraseña
                 </Form.Label>
                 <Form.Control
-                  className="bg-primary-white"
+                  className="bg-primary-surface-8dp text-primary-white border-0"
                   autoComplete="on"
                   type="password"
                   placeholder="Contraseña"
@@ -102,7 +102,7 @@ const LoginPage = () => {
               </Button>
             </Form>
           </Card.Body>
-          <Link to="/register" className="link text-primary-white ">
+          <Link to="/register" className="link text-primary-white mb-3">
             ¿Aún no tienes cuenta?
           </Link>
         </Card>

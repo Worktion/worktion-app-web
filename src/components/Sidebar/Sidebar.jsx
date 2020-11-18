@@ -6,12 +6,12 @@ import LogoWorktion from "../../components/LogoWorktion/LogoWorktion";
 
 const Container = styled.div`
   background-color: #121212;
-  opacity: 89%;
+  opacity: 95%;
   position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
-  width: 16rem;
+  width: 14rem;
   display: flex;
   flex-direction: column;
   align-items: center;

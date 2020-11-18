@@ -17,13 +17,14 @@ const ProfileName = styled.h1`
   font-size: 1rem;
   font-weight: 300;
   color: #fff;
-  opacity: 90%;
+  opacity: 87%;
   text-align: center;
 `;
 
 const UserConfiIcon = styled(FaCog)`
-  position: absolute;
-  margin-right: 10rem;
+  position: relative;
+  left: 2rem;
+  top: -1rem;
   color: #fff;
   opacity: 87%;
 

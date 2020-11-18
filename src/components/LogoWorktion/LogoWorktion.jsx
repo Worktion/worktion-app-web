@@ -1,5 +1,5 @@
 import React from "react";
-import logoWorktion from "../../images/logoWorktion.png";
+import logoWorktion from "../../images/LogoWorktion.png";
 import styled from "styled-components";
 
 const LogoImg = styled.img`
