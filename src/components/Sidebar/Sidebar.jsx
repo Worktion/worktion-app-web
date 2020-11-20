@@ -5,8 +5,7 @@ import Profile from "./Menu/Profile";
 import LogoWorktion from "../../components/LogoWorktion/LogoWorktion";
 
 const Container = styled.div`
-  background-color: #121212;
-  opacity: 95%;
+  background-color: rgb(255,255,255, 0.05);
   position: fixed;
   left: 0;
   top: 0;
