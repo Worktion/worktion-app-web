@@ -1,23 +1,23 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
-import { FaTimesCircle } from "react-icons/fa"
+import { Card } from "react-bootstrap";
 
-const RoutineCard = ({ image }) => {
-
-   //{name, description, is_public, time, difficulty, muscle_group, cover}
+const RoutineCard = ({ routine }) => {
   return (
-    <Card className="bg-white-with-opacity text-primary-white" style={{ width: "20rem", margin: "1rem" }}>
+    <Card
+      className="bg-white-with-opacity text-primary-white"
+      style={{ width: "20rem", margin: "1rem" }}
+    >
       <Card.Img
         style={{ height: "20vh", objectFit: "cover" }}
         variant="top"
-        src={image}
+        src={routine.cover}
       />
       <Card.Body>
-        <Card.Title>Nombre de la rutina</Card.Title>
-        <p>Es publica:</p>
-        <p>Duración:</p>
-        <p>Dificultad:</p>
-        <p>Grupo muscular:</p>
+        <Card.Title>{routine.name}</Card.Title>
+        <p>{routine.is_public ? "Rutina publica" : "Rutina privada"}</p>
+        <p>Duración: {routine.time}</p>
+        <p>Dificultad: {routine.dificulty}</p>
+        <p>Grupo muscular: {routine.muscle_group}</p>
       </Card.Body>
     </Card>
   );
