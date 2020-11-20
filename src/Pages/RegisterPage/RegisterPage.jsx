@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Card, Container, Navbar, Col } from 'react-bootstrap';
+import { Form, Button, Card, Container, Col, Row } from 'react-bootstrap';
 import CustomAlert from "../../components/Alert/CustomAlert";
 import { useUser } from '../../context/user-context';
 import { useState } from "react";
@@ -48,6 +48,10 @@ const RegisterPage = () => {
     }
   };
 
+  const handleBackClick = (e) => {
+    e.preventDefault();
+    history.push("/login");
+  }
 
   return (
     <div className='vh-100 w-100 bg-black-background'>
@@ -193,14 +197,19 @@ const RegisterPage = () => {
                   Registrarse
               </Button>
               </Form.Row>
-              <Form.Row className='d-flex justify-content-center'>
-                <Button className='w-50 mt-3'
+            </Form>
+            <Container >
+            <Row className="justify-content-md-center"> 
+                <Button className='mt-3 w-50'
                   variant="outline-danger"
-                  type='submit'>
+                  type='submit'
+                  onClick={handleBackClick}>
                   Regresar
               </Button>
-              </Form.Row>
-            </Form>
+
+            </Row>
+
+            </Container>
           </Card.Body>
         </Card>
       </Container>
