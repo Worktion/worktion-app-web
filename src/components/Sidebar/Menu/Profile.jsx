@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { FaCog } from "react-icons/fa";
-import { useUser } from "../../../context/user-context";
-import ReactRoundedImage from "react-rounded-image";
 import { useHistory } from "react-router-dom";
-import defaultProfileImg from "../../../images/defaultProfileImg.png"
+import { Form, Image } from "react-bootstrap";
+import { useUser } from "../../../context/user-context";
+import defaultProfileImg from "../../../images/defaultProfileImg.png";
 
 const Container = styled.div`
   margin-top: 1rem;
@@ -29,14 +29,12 @@ const UserConfiIcon = styled(FaCog)`
   opacity: 87%;
 
   background-color: ${(props) => (props.active ? "#000" : null)};
-  width: ${(props) => (props.active ? "1.35rem" : null)};
-  height: ${(props) => (props.active ? "1.35rem" : null)};
   border-bottom: ${(props) => (props.active ? "solid 1px #ff3b14" : null)};
+  border-radius: ${(props) => (props.active ? "3px" : null)};
   &:hover {
     background-color: #000;
-    height: 1.35rem;
-    width: 1.35rem;
     border-bottom: solid 1px #ff3b14;
+    border-radius: 3px;
   }
 `;
 
@@ -51,11 +49,14 @@ const Profile = ({ changeItemSelected, active }) => {
 
   return (
     <Container>
-      <ReactRoundedImage
-        image={user.cover ? user.cover : defaultProfileImg}
-        roundedSize="0"
-        imageWidth="90"
-        imageHeight="90"
+      <Image
+        src={user.cover ? user.cover : defaultProfileImg}
+        alt="Foto de perfil"
+        style={{
+          height: "90px",
+          width: "90px",
+        }}
+        roundedCircle
       />
       <UserConfiIcon
         size="1.2em"

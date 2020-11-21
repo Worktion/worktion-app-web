@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Col, Button, Row, Form } from "react-bootstrap";
+import Axios from "axios";
 import { useUser } from "../../context/user-context";
 import ImagePicker from "../../components/ImagePicker/ImagePicker";
 import { useForm } from "react-hook-form";
-import Axios from "axios";
+import CustomModal from "../../components/CustomModal/CustomModal";
+
 const EditProfilePage = () => {
+  const [data, setData] = useState(null);
   const { user } = useUser();
   const { register, handleSubmit, getValues, errors } = useForm();
 
-  const handleUpdateClick = async (data) => {
+  const handleUpdateClick = (data) => {
+    setData(data);
+  };
+
+  const updateUserInformation = async () => {
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("username", data.username);
@@ -20,6 +27,7 @@ const EditProfilePage = () => {
 
     try {
       await Axios.patch(`/api/users/${user.id}/`, formData);
+      setData(null);
       window.location.reload();
     } catch (error) {
       console.log(error);
@@ -28,6 +36,13 @@ const EditProfilePage = () => {
 
   return (
     <div className="vh-100 w-100 bg-black-background">
+      <CustomModal
+        active={data ? true : false}
+        title={"Actualizar información"}
+        body={"¿Seguro que desea guardar los cambios?"}
+        handleAccept={updateUserInformation}
+        handleClose={() => setData(null)}
+      ></CustomModal>
       <Container className="pt-3">
         <h1 className="text-primary-white mb-3">Perfil</h1>
         <Row>

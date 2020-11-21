@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
-import "./App.scss";
+import "./././components/App/App.scss";
 import App from "./components/App/App";
 import Axios from "axios"
 

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import ReactRoundedImage from "react-rounded-image";
-import { Form } from "react-bootstrap";
+import { Form, Image } from "react-bootstrap";
 import { MdCancel } from "react-icons/md";
 import styled from "styled-components";
 
@@ -8,8 +7,9 @@ const StyledIconCancel = styled(MdCancel)`
   position: absolute;
   left: 4.1rem;
   &:hover {
-    height: 1.8rem;
-    width: 1.8rem;
+    opacity: 50%;
+    height: 1.4rem;
+    width: 1.4rem;
   }
 `;
 
@@ -26,15 +26,18 @@ const ImagePicker = ({ defaultImage, register }) => {
         {imageFile && (
           <StyledIconCancel
             className="text-primary-white"
-            size="2rem"
+            size="1.5rem"
             onClick={handleClickCancelImage}
           ></StyledIconCancel>
         )}
-        <ReactRoundedImage
-          image={imageFile ? URL.createObjectURL(imageFile) : defaultImage}
-          roundedSize="0"
-          imageWidth="200"
-          imageHeight="200"
+        <Image
+          src={imageFile ? URL.createObjectURL(imageFile) : defaultImage}
+          alt="Foto de perfil"
+          style={{
+            height: "200px",
+            width: "200px",
+          }}
+          roundedCircle
         />
       </div>
       <div className="d-flex mt-3 text-primary-white">

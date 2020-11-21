@@ -1,0 +1,14 @@
+@import "../../custom.scss";
+
+.modal-content{
+  background-color: map_get($theme-colors, 'primary-black');
+}
+
+button.close{
+  color: map_get($theme-colors, 'primary-white');
+  &:focus,
+  &:hover{
+    color: white;
+    opacity: 0.90;
+  }
+}
