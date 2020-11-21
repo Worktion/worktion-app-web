@@ -1,18 +1,15 @@
 import React from "react";
 import { Container, Col, Button, Row, Form } from "react-bootstrap";
 import { useUser } from "../../context/user-context";
-import ReactRoundedImage from "react-rounded-image";
-import defaultProfileImg from "../../images/defaultProfileImg.png";
+import ImagePicker from "../../components/ImagePicker/ImagePicker";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
 const EditProfilePage = () => {
   const { user } = useUser();
-
   const { register, handleSubmit, getValues, errors } = useForm();
 
   const handleUpdateClick = async (data) => {
     const formData = new FormData();
-
     formData.append("email", data.email);
     formData.append("username", data.username);
     formData.append("first_name", data.first_name);
@@ -22,8 +19,7 @@ const EditProfilePage = () => {
     data.cover[0] && formData.append("cover", data.cover[0]);
 
     try {
-      console.log("Enviando request");
-      await Axios.patch("/api/users/2/", formData);
+      await Axios.patch(`/api/users/${user.id}/`, formData);
       window.location.reload();
     } catch (error) {
       console.log(error);
@@ -35,18 +31,11 @@ const EditProfilePage = () => {
       <Container className="pt-3">
         <h1 className="text-primary-white mb-3">Perfil</h1>
         <Row>
-          <Col xs lg="3">
-            <div className="d-flex justify-content-center">
-              <ReactRoundedImage
-                image={user.cover ? user.cover : defaultProfileImg}
-                roundedSize="0"
-                imageWidth="200"
-                imageHeight="200"
-              />
-            </div>
-            <div className="d-flex mt-3 text-primary-white">
-              <Form.File name="cover" id="formControlFile" ref={register} />
-            </div>
+          <Col xs lg="4">
+            <ImagePicker
+              defaultImage={user.cover}
+              register={register}
+            ></ImagePicker>
           </Col>
           <Col>
             <Form className="w-100" onSubmit={handleSubmit(handleUpdateClick)}>
@@ -61,8 +50,23 @@ const EditProfilePage = () => {
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                       plaintext
                       defaultValue={user.first_name}
-                      ref={register}
+                      ref={register({
+                        required: "Este campo es requerido",
+                        maxLength: {
+                          value: 50,
+                          message: "Máximo número de caracteres alcanzado",
+                        },
+                        pattern: {
+                          value: /[A-zÀ-ú]/,
+                          message: "Nombre inválido",
+                        },
+                      })}
                     />
+                    {errors.first_name && (
+                      <span className="text-danger">
+                        {errors.first_name.message}
+                      </span>
+                    )}
                   </Form.Group>
                 </Col>
                 <Col>
@@ -75,8 +79,23 @@ const EditProfilePage = () => {
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                       plaintext
                       defaultValue={user.last_name}
-                      ref={register}
+                      ref={register({
+                        required: "Este campo es requerido",
+                        maxLength: {
+                          value: 50,
+                          message: "Máximo número de caracteres alcanzado",
+                        },
+                        pattern: {
+                          value: /[A-zÀ-ú]/,
+                          message: "Apellido inválido",
+                        },
+                      })}
                     />
+                    {errors.last_name && (
+                      <span className="text-danger">
+                        {errors.last_name.message}
+                      </span>
+                    )}
                   </Form.Group>
                 </Col>
               </Form.Row>
@@ -91,8 +110,19 @@ const EditProfilePage = () => {
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                       plaintext
                       defaultValue={user.username}
-                      ref={register}
+                      ref={register({
+                        required: "Este campo es requerido",
+                        maxLength: {
+                          value: 40,
+                          message: "Máximo número de caracteres alcanzado",
+                        },
+                      })}
                     />
+                    {errors.username && (
+                      <span className="text-danger">
+                        {errors.username.message}
+                      </span>
+                    )}
                   </Form.Group>
                 </Col>
                 <Col>
@@ -102,11 +132,27 @@ const EditProfilePage = () => {
                     </Form.Label>
                     <Form.Control
                       name="email"
+                      type="email"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                       plaintext
                       defaultValue={user.email}
-                      ref={register}
+                      ref={register({
+                        required: "Este campo es requerido",
+                        maxLength: {
+                          value: 100,
+                          message: "Máximo número de caracteres alcanzado",
+                        },
+                        pattern: {
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: "Dirección de email inválida",
+                        },
+                      })}
                     />
+                    {errors.email && (
+                      <span className="text-danger">
+                        {errors.email.message}
+                      </span>
+                    )}
                   </Form.Group>
                 </Col>
               </Form.Row>
@@ -120,10 +166,18 @@ const EditProfilePage = () => {
                   className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                   plaintext
                   defaultValue={user.bio}
-                  ref={register}
+                  ref={register({
+                    maxLength: {
+                      value: 350,
+                      message: "Máximo número de caracteres alcanzado",
+                    },
+                  })}
                 />
               </Form.Group>
-              <Form.Group as={Col} md="3" controlId="birthday">
+              <Form.Group
+                style={{ display: "inline-grid" }}
+                controlId="birthday"
+              >
                 <Form.Label className="text-primary-white">
                   Fecha Nacimiento
                 </Form.Label>
