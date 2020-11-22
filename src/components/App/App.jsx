@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.scss";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { setAxiosInterceptors } from "../../helpers/auth-helper";
 import { UserProvider, useUser } from "../../context/user-context";

@@ -63,7 +63,6 @@ const EditProfilePage = () => {
                     <Form.Control
                       name="first_name"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
-                      plaintext
                       defaultValue={user.first_name}
                       ref={register({
                         required: "Este campo es requerido",
@@ -92,7 +91,6 @@ const EditProfilePage = () => {
                     <Form.Control
                       name="last_name"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
-                      plaintext
                       defaultValue={user.last_name}
                       ref={register({
                         required: "Este campo es requerido",
@@ -123,7 +121,6 @@ const EditProfilePage = () => {
                     <Form.Control
                       name="username"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
-                      plaintext
                       defaultValue={user.username}
                       ref={register({
                         required: "Este campo es requerido",
@@ -149,7 +146,6 @@ const EditProfilePage = () => {
                       name="email"
                       type="email"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
-                      plaintext
                       defaultValue={user.email}
                       ref={register({
                         required: "Este campo es requerido",
@@ -179,7 +175,6 @@ const EditProfilePage = () => {
                   as="textarea"
                   name="bio"
                   className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
-                  plaintext
                   defaultValue={user.bio}
                   ref={register({
                     maxLength: {
@@ -200,7 +195,6 @@ const EditProfilePage = () => {
                   as="input"
                   name="birth_date"
                   className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
-                  plaintext
                   type="date"
                   defaultValue={user.birth_date}
                   ref={register}

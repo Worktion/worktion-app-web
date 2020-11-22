@@ -3553,6 +3553,11 @@ mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.5:
   dependencies:
     minimist "^1.2.5"
 
+moment@^2.29.1:
+  version "2.29.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
+  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -4177,11 +4182,6 @@ react-overlays@^4.1.0:
     prop-types "^15.7.2"
     uncontrollable "^7.0.0"
     warning "^4.0.3"
-
-react-rounded-image@^2.0.11:
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/react-rounded-image/-/react-rounded-image-2.0.11.tgz#600eaeefe05582e661854d70c82fe685a084fe77"
-  integrity sha512-9NVGlsI8BlzBJYhqX7UYmUe5v5MiWQ3X6ZIE23kCo9h9pX2X+gRZJX3dLKMoFo5RmUtJcnrQVPdFK9eDyb73Ww==
 
 react-router-dom@^5.2.0:
   version "5.2.0"
