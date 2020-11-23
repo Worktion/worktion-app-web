@@ -1,11 +1,12 @@
-@import "../../custom.scss";
+
+@use "../../components/App/App";
 
 .modal-content{
-  background-color: map_get($theme-colors, 'primary-black');
+  background-color: map_get(App.$theme-colors, 'primary-black');
 }
 
 button.close{
-  color: map_get($theme-colors, 'primary-white');
+  color: map_get(App.$theme-colors, 'primary-white');
   &:focus,
   &:hover{
     color: white;

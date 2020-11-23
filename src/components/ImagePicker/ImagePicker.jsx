@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Image } from "react-bootstrap";
-import { MdCancel } from "react-icons/md";
+import { MdCancel } from "@meronex/icons/md";
 import styled from "styled-components";
 
 const StyledIconCancel = styled(MdCancel)`

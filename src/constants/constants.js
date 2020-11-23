@@ -7,7 +7,7 @@ export const routineDifficulties = {
 };
 
 export const muscleGroups = {
-  fullbody: "Todos los musculos",
+  fullbody: "Todos los músculos",
   arm: "Brazos",
   chest: "Pecho",
   legs: "Piernas",

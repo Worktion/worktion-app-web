@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { FaCog } from "react-icons/fa";
+import { FaCog } from "@meronex/icons/fa";
 import { useHistory } from "react-router-dom";
-import { Form, Image } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import { useUser } from "../../../context/user-context";
 import defaultProfileImg from "../../../images/defaultProfileImg.png";
 

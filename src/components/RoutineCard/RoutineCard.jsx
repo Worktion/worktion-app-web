@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, DropdownButton, Dropdown, Row } from "react-bootstrap";
-import { FaLockOpen, FaLock, FaUserCircle } from "react-icons/fa";
-import { RiFireFill, RiTimeFill } from "react-icons/ri";
-import { BiDumbbell } from "react-icons/bi";
+import { FaLockOpen, FaLock, FaUserCircle } from "@meronex/icons/fa";
+import { RiFireFill, RiTimeFill } from "@meronex/icons/ri";
+import { BiDumbbell } from "@meronex/icons/bi";
 import * as constants from "../../constants/constants";
 import moment from "moment";
 import styled from "styled-components";

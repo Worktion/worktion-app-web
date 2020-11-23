@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MenuLink from "./MenuLink";
 import styled from "styled-components";
 import { useUser } from "../../../context/user-context";
-import { FaPlusSquare, FaLayerGroup, FaSignOutAlt } from "react-icons/fa";
+import { FaPlusSquare, FaLayerGroup, FaSignOutAlt } from "@meronex/icons/fa";
 
 const Container = styled.div`
   margin-top: 2rem;
