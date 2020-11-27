@@ -1,0 +1,26 @@
+
+@use "../../components/App/App";
+
+.block-exercises {
+  width: 100%;
+  background-color: rgb(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: map_get(App.$theme-colors, 'primary-white');
+  padding: 0px;
+  padding-bottom: 15px;
+  margin-top: 40px;
+
+  
+  
+}
+
+.header-block{
+  background-color: map_get(App.$theme-colors, 'white-with-opacity');
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+

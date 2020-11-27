@@ -9,7 +9,7 @@ import CustomModal from "../../components/CustomModal/CustomModal";
 const EditProfilePage = () => {
   const [data, setData] = useState(null);
   const { user } = useUser();
-  const { register, handleSubmit, getValues, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
 
   const handleUpdateClick = (data) => {
     setData(data);

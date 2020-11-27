@@ -1,0 +1,23 @@
+
+@use "../../components/App/App";
+
+.exercise-container{
+  display: flex;
+  flex-direction: row;
+  margin-left: 50px;
+  margin-right: 50px;
+  padding: 15px;
+  margin-top: 15px;
+  color: map_get(App.$theme-colors, 'primary-white');
+  background-color: map_get(App.$theme-colors, 'white-with-opacity');
+  justify-content: space-around;
+  align-items: center;
+}
+
+.exercise-img-container{
+  display: flex;
+  flex-direction: column;
+}
+
+
+

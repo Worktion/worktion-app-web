@@ -23,8 +23,9 @@ const IconSpan = ({ icon, content, marginBottom }) => {
   );
 };
 
-const RoutineCard = ({ routine, user }) => {
+const RoutineCard = ({ routine, user, handleShowDetail }) => {
   return (
+    
     <Card
       className="bg-white-with-opacity text-primary-white shadow"
       style={{ width: "20rem", margin: "1rem", borderRadius: "3%" }}
@@ -48,7 +49,9 @@ const RoutineCard = ({ routine, user }) => {
             variant="transparent text-primary-white border-0 btn-toogle-down"
           >
             <Dropdown.Item>Editar rutina</Dropdown.Item>
-            <Dropdown.Item>Ver detalle de rutina</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleShowDetail(routine)}>
+              Ver detalle de rutina
+            </Dropdown.Item>
             <Dropdown.Item>Compartir rutina</Dropdown.Item>
           </StyledDropDownButton>
         </Row>

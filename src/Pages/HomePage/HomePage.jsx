@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useUser } from "../../context/user-context";
 import RoutineCard from "../../components/RoutineCard/RoutineCard";
 import SpinnerLoading from "../../components/SpinnerLoading/SpinnerLoading";
 import Axios from "axios";
 import { Nav } from "react-bootstrap";
 import styled from "styled-components";
+import RoutineDetailModal from "../../components/RoutineDetailModal/RoutineDetailModal";
 
 const StyledNavLink = styled.span`
   display: block;
@@ -12,7 +12,6 @@ const StyledNavLink = styled.span`
   border-bottom: ${(props) => (props.active ? "3px solid #ff3b14" : null)};
   opacity: ${(props) => (props.active ? null : "50%")};
   &:hover {
-    border-bottom: ${(props) => (props.active ? null : "1.5px solid #ff3b14")};
     opacity: ${(props) => (props.active ? null : "75%")};
     font-size: ${(props) => (props.active ? null : "1.49rem")};
   }
@@ -21,6 +20,7 @@ const StyledNavLink = styled.span`
 const HomePage = () => {
   const [myRoutines, setMyRoutines] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [showDetail, setShowDetail] = useState(null);
   const [state, setState] = useState({
     tabMyRoutines: true,
     tabSharedWithMe: false,
@@ -50,11 +50,25 @@ const HomePage = () => {
     });
   };
 
+  const closeDetail = () => {
+    setShowDetail(false);
+  };
+
+  const showRoutineDetail = (routine) => {
+    setShowDetail(routine);
+  };
+
   const showMyRoutinesCreated = () => {
     return (
       <div className="d-flex flex-wrap">
         {myRoutines.map((routine) => (
-          <RoutineCard key={routine.id} routine={routine}></RoutineCard>
+          <RoutineCard
+            key={routine.id}
+            routine={routine}
+            handleShowDetail={showRoutineDetail}
+            handleClose={closeDetail}
+            
+          ></RoutineCard>
         ))}
       </div>
     );
@@ -70,6 +84,14 @@ const HomePage = () => {
 
   return (
     <>
+      {showDetail && (
+        <RoutineDetailModal
+          show={showDetail ? true : false}
+          handleClose={closeDetail}
+          routine={showDetail ? showDetail : null}
+        ></RoutineDetailModal>
+      )}
+
       <Nav justify variant="tabs text-primary-white border-0 mt-3">
         <Nav.Item>
           <StyledNavLink

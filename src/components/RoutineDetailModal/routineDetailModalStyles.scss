@@ -1,0 +1,11 @@
+@use "../../components/App/App";
+
+
+#routine-modal {
+  width: 50%;
+  max-width: none !important;
+}
+
+.modal-routine-detail .modal-content{
+  background-color: map_get(App.$theme-colors, "black-background");
+}
