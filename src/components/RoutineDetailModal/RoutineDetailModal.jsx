@@ -21,6 +21,7 @@ const RoutineDetailModal = ({ show, handleClose, routine }) => {
           {routine.blocks &&
             routine.blocks.map((block) => (
               <BlockExercises
+                key={block.id}
                 block={block}
               ></BlockExercises>
             ))}

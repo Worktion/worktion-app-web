@@ -1,20 +1,13 @@
 import React from "react";
 import "./exerciseItemStyles.scss";
 import { Dropdown, DropdownButton } from "react-bootstrap";
-import styled from "styled-components";
-
-const StyledDropDownButton = styled(DropdownButton)`
-  &:hover {
-    box-shadow: 0 0 0 0.3px grey;
-    border-radius: 30%;
-  }
-`;
 
 const ExerciseItem = ({ executionExercise }) => {
-  console.log(executionExercise);
   return (
     <div className="exercise-container">
-      <div>{executionExercise.quantity + " repeticiones"}</div>
+      <div style={{ flex: "1", display: "flex", justifyContent: "center" }}>
+        {executionExercise.quantity + " repeticiones"}
+      </div>
 
       <div className="exercise-img-container">
         <img
@@ -24,19 +17,26 @@ const ExerciseItem = ({ executionExercise }) => {
           title={executionExercise.exercise.name}
         ></img>
 
-        <div style={{ maxWidth: "60px" }}>
-          {executionExercise.exercise.name}
+        <div
+          style={{
+            marginLeft: "15px",
+            wordWrap: "break-word",
+          }}
+        >
+          {executionExercise.exercise.name.length <= 25
+            ? executionExercise.exercise.name
+            : executionExercise.exercise.name.substr(0, 25) + "..."}
         </div>
       </div>
-      <div>
-        <StyledDropDownButton
+      <div style={{flex: ".3"}} >
+        <DropdownButton
           className="ml-auto"
-          id="dropdownRoutineOptions"
+          id="dropDownExercise"
           title=""
           variant="transparent text-primary-white border-0 btn-toogle-down"
         >
           <Dropdown.Item>Ver información de ejercicio</Dropdown.Item>
-        </StyledDropDownButton>
+        </DropdownButton>
       </div>
     </div>
   );

@@ -7,17 +7,31 @@
   margin-left: 50px;
   margin-right: 50px;
   padding: 15px;
-  margin-top: 15px;
+  margin-top: 1.5rem;
   color: map_get(App.$theme-colors, 'primary-white');
   background-color: map_get(App.$theme-colors, 'white-with-opacity');
   justify-content: space-around;
   align-items: center;
+  border-radius: 10px;
 }
 
 .exercise-img-container{
   display: flex;
-  flex-direction: column;
+  flex: 1.5;
+  flex-direction: row;
+  align-items: center;
 }
+
+#dropDownExercise {
+  &:hover {
+    box-shadow: 0 0 0 0.3px grey;
+    border-radius: 30%;
+  }
+}
+
+
+
+
 
 
 

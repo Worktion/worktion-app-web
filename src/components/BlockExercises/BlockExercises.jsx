@@ -1,15 +1,23 @@
 import React from "react";
 import ExerciseItem from "../ExerciseItem/ExerciseItem";
 import "./blockExercises.scss";
+import { BiRepeat } from "@meronex/icons/bi";
 
 const BlockExercises = (exercises) => {
   return (
-    <div className="block-exercises">
-      <div className="header-block">
-        <span>{exercises.block.name}</span> <span>{exercises.block.quantity} Repeticiones</span>
+    <div className="block-exercises" style={{ borderRadius: "15px" }}>
+      <div className="header-block display-flex align-items-center">
+        <span>{exercises.block.name}</span>
+        <span>
+          {exercises.block.quantity}
+          <BiRepeat size="2.3rem"></BiRepeat>
+        </span>
       </div>
       {exercises.block.exercises.map((exercise) => (
-        <ExerciseItem executionExercise={exercise}></ExerciseItem>
+        <ExerciseItem
+          key={exercise.id}
+          executionExercise={exercise}
+        ></ExerciseItem>
       ))}
     </div>
   );
