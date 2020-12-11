@@ -13,7 +13,7 @@ const StyledIconCancel = styled(MdCancel)`
   }
 `;
 
-const ImagePicker = ({ defaultImage, register }) => {
+const ImagePicker = ({ defaultImage, register, shape, width, height  }) => {
   const [imageFile, setImageFile] = useState();
 
   const handleClickCancelImage = () => {
@@ -34,10 +34,10 @@ const ImagePicker = ({ defaultImage, register }) => {
           src={imageFile ? URL.createObjectURL(imageFile) : defaultImage}
           alt="Foto de perfil"
           style={{
-            height: "200px",
-            width: "200px",
+            height: height ? height : "200px",
+            width: width ? width : "200px",
           }}
-          roundedCircle
+          className={shape ? shape : "rounded-circle"}
         />
       </div>
       <div className="d-flex mt-3 text-primary-white">

@@ -31,6 +31,7 @@ const HomePage = () => {
       const { data } = await Axios.get("/api/routines/");
       setMyRoutines(data);
       setIsLoading(false);
+      console.log(data)
     };
 
     fetchRoutines();

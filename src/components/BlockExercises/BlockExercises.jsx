@@ -5,8 +5,8 @@ import { BiRepeat } from "@meronex/icons/bi";
 
 const BlockExercises = (exercises) => {
   return (
-    <div className="block-exercises" style={{ borderRadius: "15px" }}>
-      <div className="header-block display-flex align-items-center">
+    <div className="block-exercises" style={{ borderRadius: "15px"}}>
+      <div className="header-block">
         <span>{exercises.block.name}</span>
         <span>
           {exercises.block.quantity}
