@@ -13,8 +13,23 @@
   justify-content: space-around;
   align-items: center;
   border-radius: 10px;
+
 }
 
+.search-container{
+  display: flex;
+  flex-direction: row;
+  color: map_get(App.$theme-colors, 'primary-white');
+  background-color: map_get(App.$theme-colors, 'white-with-opacity');
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  padding: 8px;
+  &:hover{
+    background-color: #ff3b14;
+  }
+}
 .exercise-img-container{
   display: flex;
   flex: 1.5;
