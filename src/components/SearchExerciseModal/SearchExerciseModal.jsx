@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal,InputGroup, FormControl } from "react-bootstrap";
 import SearchExerciseItem from "./SearchExerciseItem"
 
-const SearchExerciseModal = () => {
+const SearchExerciseModal = ({handleAddExercise}) => {
     const [mShow, setShow] = useState(false);
     const [exercises, setExercises] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -25,14 +25,16 @@ const SearchExerciseModal = () => {
         setExercises(data);
     };
 
-    const printExercise = exercise =>{
-        console.log("Click: " + exercise.name);
+    const sendExercise = exercise =>{
+        handleAddExercise(exercise);
         setShow(false);
     }
 
     return (
         <>
-            <Button onClick={handleShow}>Ejercicios</Button>
+            <Button
+            variant="primary-surface-8dp text-primary-white"
+             onClick={handleShow}>Agregar Ejercicio</Button>
 
             <Modal 
                 size="m"
@@ -63,7 +65,7 @@ const SearchExerciseModal = () => {
                         <SearchExerciseItem
                             key={exercise.id}
                             exercise={exercise}
-                            handleSelectExercise={printExercise}
+                            handleSelectExercise={sendExercise}
                         ></SearchExerciseItem>
                     ))}
                 </div>

@@ -1,10 +1,18 @@
-import React from "react";
-import ExerciseItem from "../ExerciseItem/ExerciseItem";
+import React, {useState} from "react";
+import ExerciseItemInput from "../ExerciseItem/ExerciseItemInput";
+import SearchExerciseModal from "../SearchExerciseModal/SearchExerciseModal"
 import { Form } from "react-bootstrap";
 
-import { BiRepeat } from "@meronex/icons/bi";
-
 const BlockExercisesInput = (exercises) => {
+
+  const [listExercises, setListExercises] = useState([]);
+
+  const addExerciseToBlock = exercise =>{
+    console.log(exercise);
+    setListExercises([...listExercises, exercise]);
+    //setListExercises(exercise);
+    console.log(listExercises);
+  }
   return (
     <div
       className="block-exercises"
@@ -34,14 +42,19 @@ const BlockExercisesInput = (exercises) => {
             style={{ maxWidth: "6rem", height: "2rem" }}
           />
         </Form.Group>
+        <SearchExerciseModal
+          handleAddExercise={addExerciseToBlock}
+        >
+
+        </SearchExerciseModal>
 
       </div>
       <h1 className="text-primary-white">Agrega un ejercicio...</h1>
-      {/* {exercises.block.exercises.map((exercise) => (
-        <ExerciseItem
+      {/* {listExercises.map((exercise) => (
+        <ExerciseItemInput
           key={exercise.id}
           executionExercise={exercise}
-        ></ExerciseItem>
+        ></ExerciseItemInput>
       ))} */}
     </div>
   );

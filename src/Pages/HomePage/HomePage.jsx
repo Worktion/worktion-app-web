@@ -55,8 +55,9 @@ const HomePage = () => {
     setShowDetail(false);
   };
 
-  const showRoutineDetail = (routine) => {
-    setShowDetail(routine);
+  const showRoutineDetail = async (routine) => {
+    const {data} = await Axios.get("/api/routines/" + routine.id + "/");
+    setShowDetail(data);
   };
 
   const showMyRoutinesCreated = () => {
