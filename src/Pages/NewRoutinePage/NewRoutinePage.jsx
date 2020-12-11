@@ -15,6 +15,7 @@ import BlockExercisesInput from "../../components/BlockExercisesInput/BlockExerc
 import * as constants from "../../constants/constants";
 import { Button } from "react-bootstrap";
 import "./newRoutineStyles.scss";
+import SearchExerciseModal from "../../components/SearchExerciseModal/SearchExerciseModal"
 
 const NewRoutinePage = () => {
   const { user } = useUser();
