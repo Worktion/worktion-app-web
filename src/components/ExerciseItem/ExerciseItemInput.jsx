@@ -1,21 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import "./exerciseItemStyles.scss";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Dropdown, DropdownButton, Form } from "react-bootstrap";
+import * as constants from "../../constants/constants";
+import DropDownItems from "../DropDownItems/DropDownItems";
 
 const ExerciseItemInput = ({ exercise }) => {
+  const [executionType, setExecutionType] = useState("Repeticiones");
+
   return (
     <div className="exercise-container">
-      {/* <div style={{ flex: "1", display: "flex", justifyContent: "center" }}>
-        {executionExercise.quantity + " repeticiones"}
-      </div> */}
+      <div
+        className="d-flex text-align-center"
+        style={{ flex: "1", marginLeft: "3rem" }}
+      >
+        <DropdownButton
+          id="idDropDownExecutionType"
+          title={executionType}
+          variant="primary-surface-8dp text-primary-white"
+        >
+          <Dropdown.ItemText style={{ opacity: "50%" }}>
+            Seleccionar tipo
+          </Dropdown.ItemText>
+          <DropDownItems
+            values={Object.values(constants.executionTypes)}
+            setValue={setExecutionType}
+          ></DropDownItems>
+        </DropdownButton>
+        <Form.Group controlId="routineTime" style={{ display: "contents" }}>
+          <Form.Control
+            name="inputTime"
+            placeholder="0"
+            className="bg-primary-surface-8dp text-primary-white border-0 pl-2 ml-2"
+            style={{ maxWidth: "3.5rem" }}
+          />
+        </Form.Group>
+      </div>
 
-      <div className="exercise-img-container">
-        {/* <img
+      <div className="exercise-img-container ml-2">
+        <img
           src={exercise.images[0].image}
           alt="Imagen de ejercicio"
           style={{ width: "70px", height: "70px" }}
           title={exercise.name}
-        ></img> */}
+        ></img>
 
         <div
           style={{
@@ -28,7 +55,7 @@ const ExerciseItemInput = ({ exercise }) => {
             : exercise.name.substr(0, 25) + "..."}
         </div>
       </div>
-      <div style={{flex: ".3"}} >
+      <div style={{ flex: ".3" }}>
         <DropdownButton
           className="ml-auto"
           id="dropDownExercise"

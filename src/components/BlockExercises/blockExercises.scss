@@ -9,8 +9,7 @@
   color: map_get(App.$theme-colors, "primary-white");
   padding: 0px;
   padding-bottom: 1.5rem;
-  margin-top: 40px;
-  
+  margin-bottom: 3rem;
 }
 
 .header-block {
@@ -22,7 +21,7 @@
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   font-size: 1.3rem;
-  
+
   &.header-block-input {
     justify-content: left;
     font-size: 1rem;

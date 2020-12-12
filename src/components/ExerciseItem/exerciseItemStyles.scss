@@ -1,36 +1,34 @@
-
 @use "../../components/App/App";
 
-.exercise-container{
+.exercise-container {
   display: flex;
   flex-direction: row;
   margin-left: 50px;
   margin-right: 50px;
   padding: 15px;
   margin-top: 1.5rem;
-  color: map_get(App.$theme-colors, 'primary-white');
-  background-color: map_get(App.$theme-colors, 'white-with-opacity');
+  color: map_get(App.$theme-colors, "primary-white");
+  background-color: map_get(App.$theme-colors, "white-with-opacity");
   justify-content: space-around;
   align-items: center;
   border-radius: 10px;
-
 }
 
-.search-container{
+.search-container {
   display: flex;
   flex-direction: row;
-  color: map_get(App.$theme-colors, 'primary-white');
-  background-color: map_get(App.$theme-colors, 'white-with-opacity');
+  color: map_get(App.$theme-colors, "primary-white");
+  background-color: map_get(App.$theme-colors, "white-with-opacity");
   justify-content: space-around;
   align-items: center;
   border-radius: 10px;
   margin-bottom: 5px;
   padding: 8px;
-  &:hover{
+  &:hover {
     background-color: #ff3b14;
   }
 }
-.exercise-img-container{
+.exercise-img-container {
   display: flex;
   flex: 1.5;
   flex-direction: row;
@@ -44,9 +42,9 @@
   }
 }
 
-
-
-
-
-
-
+#idDropDownExecutionType {
+  min-width: 8.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

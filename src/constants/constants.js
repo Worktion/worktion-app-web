@@ -19,3 +19,8 @@ export const routinesState = {
   isPublic: "Rutina pública",
   isPrivate: "Rutina privada",
 }
+
+export const executionTypes = {
+  repetitions: "Repeticiones",
+  seconds: "Segundos"
+}
