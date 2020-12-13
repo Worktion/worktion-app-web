@@ -15,6 +15,7 @@ const ExerciseItem = ({ executionExercise }) => {
           alt="Imagen de ejercicio"
           style={{ width: "70px", height: "70px" }}
           title={executionExercise.exercise.name}
+          className="rounded"
         ></img>
 
         <div
@@ -28,7 +29,7 @@ const ExerciseItem = ({ executionExercise }) => {
             : executionExercise.exercise.name.substr(0, 25) + "..."}
         </div>
       </div>
-      <div style={{flex: ".3"}} >
+      <div style={{ flex: ".3" }}>
         <DropdownButton
           className="ml-auto"
           id="dropDownExercise"

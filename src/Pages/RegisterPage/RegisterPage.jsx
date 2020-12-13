@@ -20,7 +20,6 @@ const RegisterPage = () => {
   });
 
   const showAlert = (message, type) => {
-    console.log(message);
     setAlert({
       message: message,
       type: type,
@@ -38,7 +37,7 @@ const RegisterPage = () => {
       await sleep(2000);
       history.push("/login");
     } catch (error) {
-      console.log(String(error));
+
       if (error.data.email) {
         showAlert('El email ya ha sido registrado', "danger");
       }

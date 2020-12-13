@@ -13,6 +13,14 @@ const ExerciseItemInput = ({ exercise }) => {
         className="d-flex text-align-center"
         style={{ flex: "1", marginLeft: "3rem" }}
       >
+        <Form.Group controlId="routineTime" style={{ display: "contents" }}>
+          <Form.Control
+            name="inputTime"
+            placeholder="0"
+            className="bg-primary-surface-8dp text-primary-white border-0 pl-2 mr-2"
+            style={{ maxWidth: "3.5rem" }}
+          />
+        </Form.Group>
         <DropdownButton
           id="idDropDownExecutionType"
           title={executionType}
@@ -26,14 +34,6 @@ const ExerciseItemInput = ({ exercise }) => {
             setValue={setExecutionType}
           ></DropDownItems>
         </DropdownButton>
-        <Form.Group controlId="routineTime" style={{ display: "contents" }}>
-          <Form.Control
-            name="inputTime"
-            placeholder="0"
-            className="bg-primary-surface-8dp text-primary-white border-0 pl-2 ml-2"
-            style={{ maxWidth: "3.5rem" }}
-          />
-        </Form.Group>
       </div>
 
       <div className="exercise-img-container ml-2">
@@ -42,6 +42,7 @@ const ExerciseItemInput = ({ exercise }) => {
           alt="Imagen de ejercicio"
           style={{ width: "70px", height: "70px" }}
           title={exercise.name}
+          className="rounded"
         ></img>
 
         <div

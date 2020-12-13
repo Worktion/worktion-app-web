@@ -31,7 +31,6 @@ const HomePage = () => {
       const { data } = await Axios.get("/api/routines/");
       setMyRoutines(data);
       setIsLoading(false);
-      console.log(data)
     };
 
     fetchRoutines();
@@ -56,7 +55,7 @@ const HomePage = () => {
   };
 
   const showRoutineDetail = async (routine) => {
-    const {data} = await Axios.get("/api/routines/" + routine.id + "/");
+    const { data } = await Axios.get("/api/routines/" + routine.id + "/");
     setShowDetail(data);
   };
 
@@ -69,7 +68,6 @@ const HomePage = () => {
             routine={routine}
             handleShowDetail={showRoutineDetail}
             handleClose={closeDetail}
-            
           ></RoutineCard>
         ))}
       </div>
