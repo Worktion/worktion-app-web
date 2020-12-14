@@ -19,6 +19,7 @@ const StyledNavLink = styled.span`
 
 const HomePage = () => {
   const [myRoutines, setMyRoutines] = useState({});
+  const [shareRoutines, setShareRoutines] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [showDetail, setShowDetail] = useState(null);
   const [state, setState] = useState({
@@ -30,6 +31,16 @@ const HomePage = () => {
     const fetchRoutines = async () => {
       const { data } = await Axios.get("/api/routines/");
       setMyRoutines(data);
+      setIsLoading(false);
+    };
+
+    fetchRoutines();
+  }, []);
+
+  useEffect(() => {
+    const fetchRoutines = async () => {
+      const { data } = await Axios.get("/api/share/routines/");
+      setShareRoutines(data);
       setIsLoading(false);
     };
 
@@ -75,7 +86,18 @@ const HomePage = () => {
   };
 
   const showSharedWithMe = () => {
-    return <h1 style={{ color: "#fff" }}>Rutinas compartidas conmigo</h1>;
+    return (
+      <div className="d-flex flex-wrap">
+        {shareRoutines.map((share) => (
+          <RoutineCard
+            key={share.routine.id}
+            routine={share.routine}
+            handleShowDetail={showRoutineDetail}
+            handleClose={closeDetail}
+          ></RoutineCard>
+        ))}
+      </div>
+    );
   };
 
   if (isLoading) {
@@ -108,7 +130,7 @@ const HomePage = () => {
             onClick={handleSharedSelected}
             active={state.tabSharedWithMe ? 1 : 0}
           >
-            Rutinas que me comparten
+            Compartidos conmigo
           </StyledNavLink>
         </Nav.Item>
       </Nav>
