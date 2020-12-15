@@ -1,24 +1,27 @@
 import React, { useState } from "react";
+import { EnCross } from "@meronex/icons/en";
 import "./exerciseItemStyles.scss";
 import { Dropdown, DropdownButton, Form } from "react-bootstrap";
 import * as constants from "../../constants/constants";
 import DropDownItems from "../DropDownItems/DropDownItems";
 
-const ExerciseItemInput = ({ exercise }) => {
+const ExerciseItemInput = ({ idBlock, exercise, deleteExercise }) => {
   const [executionType, setExecutionType] = useState("Repeticiones");
 
   return (
     <div className="exercise-container">
       <div
         className="d-flex text-align-center"
-        style={{ flex: "1", marginLeft: "3rem" }}
+        style={{ flex: "1.3", marginLeft: "3rem" }}
       >
         <Form.Group controlId="routineTime" style={{ display: "contents" }}>
           <Form.Control
-            name="inputTime"
-            placeholder="0"
+            name="inputQuantity"
+            value="0"
+            type="number"
+            min="1"
             className="bg-primary-surface-8dp text-primary-white border-0 pl-2 mr-2"
-            style={{ maxWidth: "3.5rem" }}
+            style={{ maxWidth: "4rem" }}
           />
         </Form.Group>
         <DropdownButton
@@ -66,6 +69,14 @@ const ExerciseItemInput = ({ exercise }) => {
           <Dropdown.Item>Ver información de ejercicio</Dropdown.Item>
         </DropdownButton>
       </div>
+      <EnCross
+        className="text-primary-white delete-button "
+        size="1.5rem"
+        onClick={() => {
+          deleteExercise(idBlock, exercise.id);
+        }}
+        style={{ marginRight: "-10px", marginTop: "-65px" }}
+      ></EnCross>
     </div>
   );
 };

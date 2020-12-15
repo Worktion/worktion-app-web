@@ -169,7 +169,7 @@ const EditProfilePage = () => {
               </Form.Row>
               <Form.Group controlId="bio">
                 <Form.Label className="text-primary-white">
-                  Bibliografía
+                  Biografía
                 </Form.Label>
                 <Form.Control
                   as="textarea"

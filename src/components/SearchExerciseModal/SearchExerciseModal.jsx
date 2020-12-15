@@ -4,7 +4,7 @@ import { Button, Modal, InputGroup, FormControl } from "react-bootstrap";
 import SearchExerciseItem from "./SearchExerciseItem";
 import SpinnerLoading from "../../components/SpinnerLoading/SpinnerLoading";
 
-const SearchExerciseModal = ({ handleAddExercise }) => {
+const SearchExerciseModal = ({ idBlock, handleAddExercise }) => {
   const [mShow, setShow] = useState(false);
   const [exercises, setExercises] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +30,7 @@ const SearchExerciseModal = ({ handleAddExercise }) => {
   };
 
   const sendExercise = (exercise) => {
-    handleAddExercise(exercise);
+    handleAddExercise( idBlock, exercise);
     setShow(false);
   };
 

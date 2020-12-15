@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useUser } from "../../context/user-context";
 import { useForm } from "react-hook-form";
+import { nanoid } from "nanoid";
 import {
   Container,
   Col,
@@ -17,12 +18,44 @@ import * as constants from "../../constants/constants";
 import { Button } from "react-bootstrap";
 import "./newRoutineStyles.scss";
 
+function ObjectBlock(id) {
+  this.id = id;
+  this.name = "";
+  this.repetitions = 0;
+  this.listExercises = [];
+}
+
 const NewRoutinePage = () => {
   const { user } = useUser();
   const { register, handleSubmit, errors } = useForm();
   const [difficulty, setDifficulty] = useState("Dificultad");
   const [muscleGroup, setMuscleGroup] = useState("Grupo muscular");
   const [exercisesBlocks, setExercisesBlocks] = useState([]);
+
+  const deleteBlock = (idBlock) => {
+    const listAux = exercisesBlocks.filter((block) => block.id != idBlock);
+    setExercisesBlocks(listAux);
+  };
+
+  const addExerciseToBlockById = (idBlock, exercise) => {
+    const listAux = exercisesBlocks.map((block) => {
+      if (block.id == idBlock) block.listExercises.push(exercise);
+      return block;
+    });
+    setExercisesBlocks(listAux);
+  };
+
+  const deleteExerciseFromBlock = (idBlock, idExercise) => {
+    const listAux = exercisesBlocks.map((block) => {
+      if (block.id == idBlock) {
+        block.listExercises = block.listExercises.filter(
+          (exercise) => exercise.id != idExercise
+        );
+      }
+      return block;
+    });
+    setExercisesBlocks(listAux);
+  };
 
   const handleSaveRoutine = async (data) => {
     console.log(data);
@@ -32,7 +65,14 @@ const NewRoutinePage = () => {
     return (
       <div className="d-flex flex-column align-items-center">
         {exercisesBlocks.map((block, index) => (
-          <BlockExercisesInput key={index}></BlockExercisesInput>
+          <BlockExercisesInput
+            id={block.id}
+            key={block.id}
+            deleteBlock={deleteBlock}
+            addExerciseToBlockById={addExerciseToBlockById}
+            deleteExercise={deleteExerciseFromBlock}
+            listExercises={block.listExercises}
+          ></BlockExercisesInput>
         ))}
       </div>
     );
@@ -214,7 +254,10 @@ const NewRoutinePage = () => {
           <Button
             variant="primary-surface-8dp text-primary-white mb-5"
             onClick={() => {
-              setExercisesBlocks([...exercisesBlocks, {}]);
+              setExercisesBlocks([
+                ...exercisesBlocks,
+                new ObjectBlock(nanoid()),
+              ]);
             }}
           >
             <span className="d-flex align-items-center">

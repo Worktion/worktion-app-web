@@ -28,3 +28,10 @@
     align-items: center;
   }
 }
+
+.delete-button {
+  opacity: 50%;
+  &:hover {
+    opacity: 100%;
+  }
+}
