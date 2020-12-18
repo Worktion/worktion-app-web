@@ -92,6 +92,7 @@ const HomePage = () => {
           <RoutineCard
             key={share.routine.id}
             routine={share.routine}
+            user={share.owner}
             handleShowDetail={showRoutineDetail}
             handleClose={closeDetail}
           ></RoutineCard>

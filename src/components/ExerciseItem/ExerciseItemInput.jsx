@@ -17,7 +17,7 @@ const ExerciseItemInput = ({ idBlock, exercise, deleteExercise }) => {
         <Form.Group controlId="routineTime" style={{ display: "contents" }}>
           <Form.Control
             name="inputQuantity"
-            value="0"
+            value="1"
             type="number"
             min="1"
             className="bg-primary-surface-8dp text-primary-white border-0 pl-2 mr-2"
