@@ -17,6 +17,7 @@ import DropDownItems from "../../components/DropDownItems/DropDownItems";
 import * as constants from "../../constants/constants";
 import { Button } from "react-bootstrap";
 import "./newRoutineStyles.scss";
+import { useRoutine, RoutineProvider } from "../../context/routine-context";
 
 function ObjectBlock(id) {
   this.id = id;
@@ -27,13 +28,26 @@ function ObjectBlock(id) {
 
 const NewRoutinePage = () => {
   const { user } = useUser();
+  const {
+    addBlock,
+    deleteBlockFromRoutine,
+    addExerciseToBlock,
+    deleteExercise,
+  } = useRoutine();
   const { register, handleSubmit, errors } = useForm();
   const [difficulty, setDifficulty] = useState("Dificultad");
   const [muscleGroup, setMuscleGroup] = useState("Grupo muscular");
   const [exercisesBlocks, setExercisesBlocks] = useState([]);
 
+  const addBlockToRoutine = () => {
+    const block = new ObjectBlock(nanoid());
+    addBlock(block.id);
+    setExercisesBlocks([...exercisesBlocks, block]);
+  };
+
   const deleteBlock = (idBlock) => {
     const listAux = exercisesBlocks.filter((block) => block.id != idBlock);
+    deleteBlockFromRoutine(idBlock);
     setExercisesBlocks(listAux);
   };
 
@@ -42,6 +56,7 @@ const NewRoutinePage = () => {
       if (block.id == idBlock) block.listExercises.push(exercise);
       return block;
     });
+    addExerciseToBlock(idBlock, exercise);
     setExercisesBlocks(listAux);
   };
 
@@ -54,6 +69,7 @@ const NewRoutinePage = () => {
       }
       return block;
     });
+    deleteExercise(idBlock, idExercise);
     setExercisesBlocks(listAux);
   };
 
@@ -253,12 +269,7 @@ const NewRoutinePage = () => {
         >
           <Button
             variant="primary-surface-8dp text-primary-white mb-5"
-            onClick={() => {
-              setExercisesBlocks([
-                ...exercisesBlocks,
-                new ObjectBlock(nanoid()),
-              ]);
-            }}
+            onClick={addBlockToRoutine}
           >
             <span className="d-flex align-items-center">
               <RiAddFill size="2rem"></RiAddFill>
@@ -272,4 +283,8 @@ const NewRoutinePage = () => {
   );
 };
 
-export default NewRoutinePage;
+export default () => (
+  <RoutineProvider>
+    <NewRoutinePage></NewRoutinePage>
+  </RoutineProvider>
+);

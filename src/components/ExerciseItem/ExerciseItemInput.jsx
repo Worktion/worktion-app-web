@@ -4,9 +4,14 @@ import "./exerciseItemStyles.scss";
 import { Dropdown, DropdownButton, Form } from "react-bootstrap";
 import * as constants from "../../constants/constants";
 import DropDownItems from "../DropDownItems/DropDownItems";
+import { useRoutine } from "../../context/routine-context";
 
 const ExerciseItemInput = ({ idBlock, exercise, deleteExercise }) => {
+  const { addInfoToExercise } = useRoutine();
   const [executionType, setExecutionType] = useState("Repeticiones");
+  const [quantity, setQuantity] = useState(1);
+
+  addInfoToExercise(idBlock, exercise.id, quantity, executionType);
 
   return (
     <div className="exercise-container">
@@ -14,12 +19,15 @@ const ExerciseItemInput = ({ idBlock, exercise, deleteExercise }) => {
         className="d-flex text-align-center"
         style={{ flex: "1.3", marginLeft: "3rem" }}
       >
-        <Form.Group controlId="routineTime" style={{ display: "contents" }}>
+        <Form.Group controlId="inputQuantity" style={{ display: "contents" }}>
           <Form.Control
             name="inputQuantity"
-            value="1"
+            defaultValue="1"
             type="number"
             min="1"
+            onChange={(e) => {
+              setQuantity(e.target.value);
+            }}
             className="bg-primary-surface-8dp text-primary-white border-0 pl-2 mr-2"
             style={{ maxWidth: "4rem" }}
           />

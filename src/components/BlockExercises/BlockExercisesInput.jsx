@@ -3,6 +3,7 @@ import { EnCross } from "@meronex/icons/en";
 import ExerciseItemInput from "../ExerciseItem/ExerciseItemInput";
 import SearchExerciseModal from "../SearchExerciseModal/SearchExerciseModal";
 import { Form } from "react-bootstrap";
+import { useRoutine } from "../../context/routine-context";
 
 const BlockExercisesInput = ({
   id,
@@ -11,6 +12,18 @@ const BlockExercisesInput = ({
   listExercises,
   deleteExercise,
 }) => {
+  const { addInfoToBlock } = useRoutine();
+  const [state, setState] = useState({ nameBlock: "", repetitions: 0 });
+
+  addInfoToBlock(id, state.nameBlock, state.repetitions);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setState((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
   return (
     <div
       className="block-exercises"
@@ -22,25 +35,25 @@ const BlockExercisesInput = ({
             Nombre del bloque
           </Form.Label>
           <Form.Control
-            name="routineNameControl"
+            id="nameBlock"
             placeholder="Ingrese el nombre"
             className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
+            onChange={handleChange}
+            maxLength="50"
             style={{ maxWidth: "13rem", height: "2rem" }}
           />
         </Form.Group>
 
-        <Form.Group
-          controlId="blockRep"
-          className="form-inline m-2 align-items-center"
-        >
+        <Form.Group className="form-inline m-2 align-items-center">
           <Form.Label className="text-primary-white mr-2">
             Repeticiones
           </Form.Label>
           <Form.Control
-            name="blockRepControl"
+            id="repetitions"
             type="number"
             min="1"
             className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
+            onChange={handleChange}
             style={{ maxWidth: "6rem", height: "2rem" }}
           />
         </Form.Group>
@@ -60,9 +73,9 @@ const BlockExercisesInput = ({
       {listExercises.map((exercise) => (
         <ExerciseItemInput
           idBlock={id}
-          deleteExercise={deleteExercise}
           key={exercise.id}
           exercise={exercise}
+          deleteExercise={deleteExercise}
         ></ExerciseItemInput>
       ))}
     </div>
