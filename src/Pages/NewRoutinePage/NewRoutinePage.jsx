@@ -18,6 +18,7 @@ import * as constants from "../../constants/constants";
 import { Button } from "react-bootstrap";
 import "./newRoutineStyles.scss";
 import { useRoutine, RoutineProvider } from "../../context/routine-context";
+import CustomAlert from "../../components/Alert/CustomAlert";
 
 function ObjectBlock(id) {
   this.id = id;
@@ -33,11 +34,15 @@ const NewRoutinePage = () => {
     deleteBlockFromRoutine,
     addExerciseToBlock,
     deleteExercise,
+    addInfoToRoutine,
+    saveRoutine,
+    isRoutineValid,
   } = useRoutine();
   const { register, handleSubmit, errors } = useForm();
   const [difficulty, setDifficulty] = useState("Dificultad");
   const [muscleGroup, setMuscleGroup] = useState("Grupo muscular");
   const [exercisesBlocks, setExercisesBlocks] = useState([]);
+  const [error, setError] = useState(null);
 
   const addBlockToRoutine = () => {
     const block = new ObjectBlock(nanoid());
@@ -74,7 +79,13 @@ const NewRoutinePage = () => {
   };
 
   const handleSaveRoutine = async (data) => {
-    console.log(data);
+    addInfoToRoutine(data, muscleGroup, difficulty);
+    const message = isRoutineValid();
+    if (true === message) {
+      saveRoutine();
+    } else {
+      setError(message);
+    }
   };
 
   const showExercisesBlocksInput = () => {
@@ -96,6 +107,13 @@ const NewRoutinePage = () => {
 
   return (
     <>
+      <CustomAlert
+        variant={"danger"}
+        content={error}
+        closeError={() => {
+          setError(null);
+        }}
+      ></CustomAlert>
       <Form onSubmit={handleSubmit(handleSaveRoutine)}>
         <div
           className="text-primary-white mt-3 mb-3"
@@ -125,6 +143,7 @@ const NewRoutinePage = () => {
                       name="routineName"
                       placeholder="Ingrese el nombre de la rutina"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
+                      maxLength="50"
                       ref={register({
                         required: "Este campo es requerido",
                         maxLength: {
@@ -137,9 +156,9 @@ const NewRoutinePage = () => {
                         },
                       })}
                     />
-                    {errors.routine_name && (
+                    {errors.routineName && (
                       <span className="text-danger">
-                        {errors.routine_name.message}
+                        {errors.routineName.message}
                       </span>
                     )}
                   </Form.Group>
@@ -152,7 +171,9 @@ const NewRoutinePage = () => {
                       name="description"
                       placeholder="Ingrese la descripción"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
+                      maxLength="350"
                       ref={register({
+                        required: "Este campo es requerido",
                         maxLength: {
                           value: 350,
                           message: "Máximo número de caracteres alcanzado",
@@ -178,6 +199,11 @@ const NewRoutinePage = () => {
                       setValue={setMuscleGroup}
                     ></DropDownItems>
                   </DropdownButton>
+                  {errors.description && (
+                    <span className="text-danger">
+                      {errors.description.message}
+                    </span>
+                  )}
                 </Col>
                 <Col>
                   <div className="d-flex flex-column">
@@ -188,20 +214,30 @@ const NewRoutinePage = () => {
                       <RiFireFill
                         size="1.2rem"
                         className="text-primary-white mr-1"
+                        style={{ alignSelf: "flex-start", marginTop: "0.6rem" }}
                       ></RiFireFill>
-                      <DropdownButton
-                        id="idDropDownDifficult"
-                        title={difficulty}
-                        variant="primary-surface-8dp text-primary-white"
-                      >
-                        <Dropdown.ItemText style={{ opacity: "50%" }}>
-                          Seleccionar dificultad
-                        </Dropdown.ItemText>
-                        <DropDownItems
-                          values={Object.values(constants.routineDifficulties)}
-                          setValue={setDifficulty}
-                        ></DropDownItems>
-                      </DropdownButton>
+                      <div className="d-flex flex-column">
+                        <DropdownButton
+                          id="idDropDownDifficult"
+                          title={difficulty}
+                          variant="primary-surface-8dp text-primary-white"
+                        >
+                          <Dropdown.ItemText style={{ opacity: "50%" }}>
+                            Seleccionar dificultad
+                          </Dropdown.ItemText>
+                          <DropDownItems
+                            values={Object.values(
+                              constants.routineDifficulties
+                            )}
+                            setValue={setDifficulty}
+                          ></DropDownItems>
+                        </DropdownButton>
+                        {errors.description && (
+                          <span className="text-danger">
+                            {errors.description.message}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     <div
@@ -211,14 +247,17 @@ const NewRoutinePage = () => {
                       <RiTimeFill
                         size="1.2rem"
                         className="text-primary-white mr-1"
+                        style={{ alignSelf: "flex-start", marginTop: "0.6rem" }}
                       ></RiTimeFill>
                       <Form.Group
                         controlId="routineTime"
-                        style={{ display: "contents" }}
+                        style={{ display: "flex", flexDirection: "column" }}
                       >
                         <Form.Control
                           name="routineTime"
                           placeholder="Minutos"
+                          type="number"
+                          maxLength="6"
                           className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                           style={{ maxWidth: "120px" }}
                           ref={register({
@@ -228,7 +267,6 @@ const NewRoutinePage = () => {
                               message: "Máximo número de caracteres alcanzado",
                             },
                             pattern: {
-                              value: /[A-zÀ-ú]/,
                               message: "Duración inválida",
                             },
                           })}
@@ -240,17 +278,6 @@ const NewRoutinePage = () => {
                         )}
                       </Form.Group>
                     </div>
-                    <Form.Group
-                      className="text-primary-white mt-2"
-                      style={{ marginLeft: "1.1rem" }}
-                    >
-                      <Form.Check
-                        name="checkBoxIsPublic"
-                        type="checkbox"
-                        label="Es pública"
-                        ref={register}
-                      />
-                    </Form.Group>
                   </div>
                 </Col>
               </Form.Row>
@@ -278,6 +305,11 @@ const NewRoutinePage = () => {
           </Button>
         </div>
         {showExercisesBlocksInput()}
+        <div>
+          <Button className="w-50" variant="outline-success" type="submit">
+            Guardar
+          </Button>
+        </div>
       </Form>
     </>
   );

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { nanoid } from "nanoid";
+import Axios from "axios";
+import * as constants from "../constants/constants";
 
 const RoutineContext = React.createContext();
 
 function ObjectRoutine() {
-  this.name = name;
   this.exercisesBlocks = [];
 }
 
@@ -66,17 +66,105 @@ export function RoutineProvider(props) {
   }
 
   function addInfoToBlock(idBlock, name, repetitions) {
-    console.log(name, repetitions);
     routine.exercisesBlocks = routine.exercisesBlocks.map((block) => {
       if (block.id == idBlock) {
         block.name = name;
         block.repetitions = repetitions;
-        console.log(block);
       }
       return block;
     });
     setRoutine(routine);
   }
+
+  function addInfoToRoutine(infoExercise, muscleGroup, difficult) {
+    routine.name = infoExercise.routineName;
+    routine.description = infoExercise.description;
+    routine.cover = infoExercise.cover[0];
+    routine.time = infoExercise.routineTime;
+    routine.muscleGroup = muscleGroup;
+    routine.difficult = difficult;
+    setRoutine(routine);
+  }
+
+  async function saveRoutine() {
+    const request = {
+      name: routine.name,
+      description: routine.description,
+      time: parseInt(routine.time),
+      is_public: false,
+      dificulty: constants.KeyRoutineDifficulties[routine.difficult],
+      muscle_group: constants.keyMuscleGroups[routine.muscleGroup],
+      blocks: routine.exercisesBlocks.map((block) => {
+        return {
+          name: block.name,
+          quantity: parseInt(block.repetitions),
+          exercises: block.listExercises.map((exercise) => {
+            return {
+              exercise_id: exercise.id,
+              typeExecution:
+                constants.keysExecutionTypes[exercise.executionType],
+              quantity: parseInt(exercise.quantity),
+            };
+          }),
+        };
+      }),
+    };
+
+    const { data } = await Axios.post("/api/routines/", request);
+    console.log("Respuesta", data)
+    await saveRoutineCover(data.id);
+  }
+
+  const saveRoutineCover = async (idRoutine) => {
+    const formData = new FormData();
+    formData.append("cover", routine.cover);
+    const { data } = await Axios.patch(`/api/routines/${idRoutine}/`, formData);
+    console.log("Todo bien", data);
+  };
+
+  function isRoutineValid() {
+    let errorMessage = true;
+
+    if (routine.muscleGroup == "Grupo muscular") {
+      errorMessage = "Selecciona un grupo muscular.";
+    } else if (routine.difficult == "Dificultad") {
+      errorMessage = "Selecciona una dificultad.";
+    } else if (routine.cover == null) {
+      errorMessage = "Selecciona una imagen.";
+    } else if (routine.exercisesBlocks.length == 0) {
+      errorMessage =
+        "La rutina debe contener al menos un bloque de ejercicios.";
+    } else if (areEmptyBlocks()) {
+      errorMessage = "Cada bloque debe contener al menos un ejercicio.";
+    } else if (areBlockInfoEmpty()) {
+      errorMessage =
+        "Verifique que la información de cada bloque se encuentre completa.";
+    }
+
+    return errorMessage;
+  }
+
+  const areEmptyBlocks = () => {
+    const areValid = routine.exercisesBlocks.map((block) => {
+      if (block.listExercises.length == 0) {
+        return false;
+      }
+      return block;
+    });
+
+    return areValid.includes(false);
+  };
+
+  const areBlockInfoEmpty = () => {
+    const areValid = routine.exercisesBlocks.map((block) => {
+      if (block.name == "" || block.repetitions == 0) {
+        return false;
+      }
+      return block;
+    });
+
+    return areValid.includes(false);
+  };
 
   const value = useMemo(() => {
     return {
@@ -87,6 +175,9 @@ export function RoutineProvider(props) {
       deleteExercise,
       addInfoToExercise,
       addInfoToBlock,
+      addInfoToRoutine,
+      saveRoutine,
+      isRoutineValid,
     };
   }, [routine]);
 

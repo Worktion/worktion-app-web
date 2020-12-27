@@ -13,11 +13,21 @@ const StyledIconCancel = styled(MdCancel)`
   }
 `;
 
-const ImagePicker = ({ defaultImage, register, shape, width, height  }) => {
+const ImagePicker = ({ defaultImage, register, shape, width, height }) => {
   const [imageFile, setImageFile] = useState();
 
   const handleClickCancelImage = () => {
     setImageFile(null);
+  };
+
+  const cutName = (name) => {
+    let shortname = "";
+    if (name.length <= 21) {
+      shortname = name;
+    } else {
+      shortname = name.substr(0, 18) + "...";
+    }
+    return shortname;
   };
 
   return (
@@ -49,8 +59,9 @@ const ImagePicker = ({ defaultImage, register, shape, width, height  }) => {
           name="cover"
           id="formControlFile"
           ref={register}
-          label={imageFile ? imageFile.name : "Seleccionar imagen"}
+          label={imageFile ? cutName(imageFile.name) : "Seleccionar imagen"}
           data-browse="Buscar"
+          accept=".jpg, .jpeg, .png"
           custom
         />
       </div>

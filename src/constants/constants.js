@@ -6,8 +6,17 @@ export const routineDifficulties = {
   legendary: "Legendario",
 };
 
+export const KeyRoutineDifficulties = {
+  "Novato": "novice",
+  "Principiante": "beginner",
+  "Intermedio": "intermediate",
+  "Avanzado": "advanced", 
+  "Legendario": "legendary",
+
+}
+
 export const muscleGroups = {
-  fullbody: "Todos los músculos",
+  fullbody: "Cuerpo completo",
   arm: "Brazos",
   chest: "Pecho",
   legs: "Piernas",
@@ -15,12 +24,25 @@ export const muscleGroups = {
   shoulder: "Hombros",
 };
 
+export const keyMuscleGroups = {
+  "Cuerpo completo": "fullbody",
+  "Brazos": "arm",
+  "Pecho": "chest",
+  "Piernas": "legs",
+  "Espalda": "back",
+  "Hombros": "shoulder",
+};
+
 export const routinesState = {
   isPublic: "Rutina pública",
   isPrivate: "Rutina privada",
-}
+};
 
 export const executionTypes = {
   repetitions: "Repeticiones",
-  seconds: "Segundos"
-}
+  seconds: "Segundos",
+};
+export const keysExecutionTypes = {
+  "Repeticiones": "reps",
+  "Segundos": "secs",
+};
