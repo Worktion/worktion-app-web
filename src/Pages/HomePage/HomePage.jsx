@@ -22,6 +22,7 @@ const HomePage = () => {
   const [shareRoutines, setShareRoutines] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [showDetail, setShowDetail] = useState(null);
+  
   const [state, setState] = useState({
     tabMyRoutines: true,
     tabSharedWithMe: false,
@@ -64,6 +65,7 @@ const HomePage = () => {
   const closeDetail = () => {
     setShowDetail(false);
   };
+  
 
   const showRoutineDetail = async (routine) => {
     const { data } = await Axios.get("/api/routines/" + routine.id + "/");
@@ -114,6 +116,7 @@ const HomePage = () => {
           routine={showDetail ? showDetail : null}
         ></RoutineDetailModal>
       )}
+      
 
       <Nav justify variant="tabs text-primary-white border-0 mt-3">
         <Nav.Item>
