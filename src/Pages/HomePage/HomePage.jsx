@@ -5,6 +5,7 @@ import Axios from "axios";
 import { Nav } from "react-bootstrap";
 import styled from "styled-components";
 import RoutineDetailModal from "../../components/RoutineDetailModal/RoutineDetailModal";
+import { useHistory } from "react-router-dom";
 
 const StyledNavLink = styled.span`
   display: block;
@@ -22,7 +23,8 @@ const HomePage = () => {
   const [shareRoutines, setShareRoutines] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [showDetail, setShowDetail] = useState(null);
-  
+  let history = useHistory();
+
   const [state, setState] = useState({
     tabMyRoutines: true,
     tabSharedWithMe: false,
@@ -65,11 +67,13 @@ const HomePage = () => {
   const closeDetail = () => {
     setShowDetail(false);
   };
-  
 
   const showRoutineDetail = async (routine) => {
     const { data } = await Axios.get("/api/routines/" + routine.id + "/");
-    setShowDetail(data);
+    history.push({
+      pathname: "/routineDetail",
+      state: { routine: data },
+    });
   };
 
   const showMyRoutinesCreated = () => {
@@ -116,7 +120,6 @@ const HomePage = () => {
           routine={showDetail ? showDetail : null}
         ></RoutineDetailModal>
       )}
-      
 
       <Nav justify variant="tabs text-primary-white border-0 mt-3">
         <Nav.Item>

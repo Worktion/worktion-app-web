@@ -10,6 +10,7 @@ import NewRoutinePage from "../../Pages/NewRoutinePage/NewRoutinePage";
 import Dashboard from "../../container/Dashboard/Dashboard";
 import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
 import EditProfilePage from "../../Pages/EditProfilePage/EditProfilePage";
+import RoutineDetailPage from "../../Pages/RoutineDetailPage/RoutineDetailPage";
 
 setAxiosInterceptors();
 
@@ -34,8 +35,8 @@ const LoginRoutes = () => {
       <Route exact path="/newRoutine">
         <Dashboard children={<NewRoutinePage />} newRoutineItem={true} />
       </Route>
-      <Route exact path="/:username/routineDetail/:idRoutine">
-        <h1>Detalle de la rutina de usuario</h1>
+      <Route exact path="/routineDetail">
+        <Dashboard children={<RoutineDetailPage />}></Dashboard>
       </Route>
       <Route exact path="/editProfile">
         <Dashboard children={<EditProfilePage></EditProfilePage>}></Dashboard>

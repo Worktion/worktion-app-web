@@ -111,7 +111,6 @@ export function RoutineProvider(props) {
     };
 
     const { data } = await Axios.post("/api/routines/", request);
-    console.log("Respuesta", data)
     await saveRoutineCover(data.id);
   }
 
@@ -119,7 +118,6 @@ export function RoutineProvider(props) {
     const formData = new FormData();
     formData.append("cover", routine.cover);
     const { data } = await Axios.patch(`/api/routines/${idRoutine}/`, formData);
-    console.log("Todo bien", data);
   };
 
   function isRoutineValid() {
