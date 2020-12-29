@@ -22,7 +22,6 @@ const HomePage = () => {
   const [myRoutines, setMyRoutines] = useState({});
   const [shareRoutines, setShareRoutines] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [showDetail, setShowDetail] = useState(null);
   let history = useHistory();
 
   const [state, setState] = useState({
@@ -69,12 +68,10 @@ const HomePage = () => {
   };
 
   const showRoutineDetail = async (routine) => {
-    const { data } = await Axios.get("/api/routines/" + routine.id + "/");
-    history.push({
-      pathname: "/routineDetail",
-      state: { routine: data },
-    });
+  
+    history.push(`/routineDetail/${routine.id}`);
   };
+  
 
   const showMyRoutinesCreated = () => {
     return (
@@ -84,7 +81,6 @@ const HomePage = () => {
             key={routine.id}
             routine={routine}
             handleShowDetail={showRoutineDetail}
-            handleClose={closeDetail}
           ></RoutineCard>
         ))}
       </div>
@@ -100,7 +96,6 @@ const HomePage = () => {
             routine={share.routine}
             user={share.owner}
             handleShowDetail={showRoutineDetail}
-            handleClose={closeDetail}
           ></RoutineCard>
         ))}
       </div>
@@ -113,14 +108,6 @@ const HomePage = () => {
 
   return (
     <>
-      {showDetail && (
-        <RoutineDetailModal
-          show={showDetail ? true : false}
-          handleClose={closeDetail}
-          routine={showDetail ? showDetail : null}
-        ></RoutineDetailModal>
-      )}
-
       <Nav justify variant="tabs text-primary-white border-0 mt-3">
         <Nav.Item>
           <StyledNavLink

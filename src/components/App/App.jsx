@@ -35,7 +35,7 @@ const LoginRoutes = () => {
       <Route exact path="/newRoutine">
         <Dashboard children={<NewRoutinePage />} newRoutineItem={true} />
       </Route>
-      <Route exact path="/routineDetail">
+      <Route exact path="/routineDetail/:idRoutine">
         <Dashboard children={<RoutineDetailPage />}></Dashboard>
       </Route>
       <Route exact path="/editProfile">

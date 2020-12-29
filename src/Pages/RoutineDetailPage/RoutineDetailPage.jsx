@@ -1,10 +1,27 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import BlockExercises from "../../components/BlockExercises/BlockExercises";
+import Axios from "axios";
+import SpinnerLoading from "../../components/SpinnerLoading/SpinnerLoading";
 
 const RoutineDetailPage = () => {
-  let location = useLocation();
-  const routine = location.state.routine;
+  const { idRoutine } = useParams();
+  console.log(idRoutine);
+  const [isLoading, setIsLoading] = useState(true);
+  const [routineDetail, setRoutineDetail] = useState({});
+  useEffect(() => {
+    const fetchRoutineDetail = async () => {
+      const { data } = await Axios.get(`/api/routines/${idRoutine}/`);
+      setRoutineDetail(data);
+      setIsLoading(false);
+    };
+
+    fetchRoutineDetail();
+  }, []);
+
+  if (isLoading) {
+    return <SpinnerLoading />;
+  }
 
   return (
     <>
@@ -12,7 +29,7 @@ const RoutineDetailPage = () => {
         className="text-primary-white mt-3 mb-3"
         style={{ borderBottom: "1px solid" }}
       >
-        <h3>{routine.name}</h3>
+        <h3>{routineDetail.name}</h3>
       </div>
       <div
         style={{
@@ -22,8 +39,8 @@ const RoutineDetailPage = () => {
           paddingBottom: "2rem",
         }}
       >
-        {routine.blocks &&
-          routine.blocks.map((block) => (
+        {routineDetail.blocks &&
+          routineDetail.blocks.map((block) => (
             <BlockExercises key={block.id} block={block}></BlockExercises>
           ))}
       </div>
