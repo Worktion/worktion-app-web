@@ -4,8 +4,8 @@ import SpinnerLoading from "../../components/SpinnerLoading/SpinnerLoading";
 import Axios from "axios";
 import { Nav } from "react-bootstrap";
 import styled from "styled-components";
-import RoutineDetailModal from "../../components/RoutineDetailModal/RoutineDetailModal";
 import { useHistory } from "react-router-dom";
+import RoutineDetailModal from "../../components/RoutineDetailModal/RoutineDetailModal";
 
 const StyledNavLink = styled.span`
   display: block;
@@ -36,18 +36,17 @@ const HomePage = () => {
       setIsLoading(false);
     };
 
-    fetchRoutines();
-  }, []);
-
-  useEffect(() => {
-    const fetchRoutines = async () => {
+    const fetchShareRoutines = async () => {
       const { data } = await Axios.get("/api/share/routines/");
       setShareRoutines(data);
-      setIsLoading(false);
     };
 
     fetchRoutines();
+    fetchShareRoutines();
   }, []);
+
+ 
+  
 
   const handleRoutinesSelected = () => {
     setState({
@@ -63,15 +62,9 @@ const HomePage = () => {
     });
   };
 
-  const closeDetail = () => {
-    setShowDetail(false);
-  };
-
   const showRoutineDetail = async (routine) => {
-  
     history.push(`/routineDetail/${routine.id}`);
   };
-  
 
   const showMyRoutinesCreated = () => {
     return (

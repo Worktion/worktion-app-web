@@ -5,7 +5,6 @@ import BlockExercises from "../BlockExercises/BlockExercises";
 
 const RoutineDetailModal = ({ show, handleClose, routine }) => {
   
-
   return (
     <>
       
