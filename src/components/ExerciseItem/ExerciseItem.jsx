@@ -2,7 +2,7 @@ import React from "react";
 import "./exerciseItemStyles.scss";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
-const ExerciseItem = ({ executionExercise }) => {
+const ExerciseItem = ({ executionExercise, handleShowExerciseDetail }) => {
   return (
     <div className="exercise-container">
       <div style={{ flex: "1", display: "flex", justifyContent: "center" }}>
@@ -36,7 +36,11 @@ const ExerciseItem = ({ executionExercise }) => {
           title=""
           variant="transparent text-primary-white border-0 btn-toogle-down"
         >
-          <Dropdown.Item>Ver información de ejercicio</Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => handleShowExerciseDetail(executionExercise.exercise)}
+          >
+            Ver información de ejercicio
+          </Dropdown.Item>
         </DropdownButton>
       </div>
     </div>
