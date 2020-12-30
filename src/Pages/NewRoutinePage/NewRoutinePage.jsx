@@ -19,6 +19,8 @@ import { Button } from "react-bootstrap";
 import "./newRoutineStyles.scss";
 import { useRoutine, RoutineProvider } from "../../context/routine-context";
 import CustomAlert from "../../components/Alert/CustomAlert";
+import CustomModal from "../../components/CustomModal/CustomModal";
+import defaultRoutineImage from "../../images/defaultRoutineImage.jpg";
 
 function ObjectBlock(id) {
   this.id = id;
@@ -27,8 +29,14 @@ function ObjectBlock(id) {
   this.listExercises = [];
 }
 
+const initialState = {
+  difficult: "Dificultad",
+  muscleGroup: "Grupo muscular",
+  error: { content: null, variant: null },
+  customModalData: null,
+};
+
 const NewRoutinePage = () => {
-  const { user } = useUser();
   const {
     addBlock,
     deleteBlockFromRoutine,
@@ -37,17 +45,28 @@ const NewRoutinePage = () => {
     addInfoToRoutine,
     saveRoutine,
     isRoutineValid,
+    resetContext,
   } = useRoutine();
   const { register, handleSubmit, errors } = useForm();
-  const [difficulty, setDifficulty] = useState("Dificultad");
-  const [muscleGroup, setMuscleGroup] = useState("Grupo muscular");
+  const [difficulty, setDifficulty] = useState(initialState.difficult);
+  const [muscleGroup, setMuscleGroup] = useState(initialState.muscleGroup);
   const [exercisesBlocks, setExercisesBlocks] = useState([]);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(initialState.error);
+  const [customModalData, setCustomModalData] = useState(
+    initialState.customModalData
+  );
 
   const addBlockToRoutine = () => {
-    const block = new ObjectBlock(nanoid());
-    addBlock(block.id);
-    setExercisesBlocks([...exercisesBlocks, block]);
+    if (exercisesBlocks.length <= 9) {
+      const block = new ObjectBlock(nanoid());
+      addBlock(block.id);
+      setExercisesBlocks([...exercisesBlocks, block]);
+
+    } else {
+      error.content = "Límite de bloques alcanzado.";
+      error.variant = "danger";
+      setError(error);
+    }
   };
 
   const deleteBlock = (idBlock) => {
@@ -82,10 +101,34 @@ const NewRoutinePage = () => {
     addInfoToRoutine(data, muscleGroup, difficulty);
     const message = isRoutineValid();
     if (true === message) {
-      saveRoutine();
+      setCustomModalData({
+        title: "Guardar rutina",
+        body: "¿Seguro que desea guardar la rutina?",
+        handleAccept: () => {
+          saveRoutine();
+          error.content = "La rutina ha sido guardada con éxito.";
+          error.variant = "success";
+          setError(error);
+          setCustomModalData(initialState.customModalData);
+          clearFields();
+        },
+      });
     } else {
-      setError(message);
+      error.content = message;
+      error.variant = "danger";
+      setError(error);
     }
+  };
+
+  const clearFields = () => {
+    setCustomModalData(initialState.customModalData);
+    setDifficulty(initialState.difficult);
+    setMuscleGroup(initialState.muscleGroup);
+    setExercisesBlocks([]);
+    Array.from(document.querySelectorAll("input,textarea")).forEach(
+      (input) => (input.value = "")
+    );
+    resetContext();
   };
 
   const showExercisesBlocksInput = () => {
@@ -107,13 +150,24 @@ const NewRoutinePage = () => {
 
   return (
     <>
-      <CustomAlert
-        variant={"danger"}
-        content={error}
-        closeError={() => {
-          setError(null);
-        }}
-      ></CustomAlert>
+      {customModalData && (
+        <CustomModal
+          active={customModalData ? true : false}
+          title={customModalData.title}
+          body={customModalData.body}
+          handleAccept={customModalData.handleAccept}
+          handleClose={() => setCustomModalData(null)}
+        ></CustomModal>
+      )}
+      {error && (
+        <CustomAlert
+          variant={error.variant}
+          content={error.content}
+          closeError={() => {
+            setError(null);
+          }}
+        ></CustomAlert>
+      )}
       <Form onSubmit={handleSubmit(handleSaveRoutine)}>
         <div
           className="text-primary-white mt-3 mb-3"
@@ -125,7 +179,7 @@ const NewRoutinePage = () => {
           <Row>
             <Col xs lg="3">
               <ImagePicker
-                defaultImage={user.cover}
+                defaultImage={defaultRoutineImage}
                 shape={"rounded"}
                 width="175px"
                 height="175px"
@@ -305,8 +359,27 @@ const NewRoutinePage = () => {
           </Button>
         </div>
         {showExercisesBlocksInput()}
-        <div>
-          <Button className="w-50" variant="outline-success" type="submit">
+        <div
+          className="w-100 mb-2 bg-black-background d-flex"
+          style={{ position: "fixed", bottom: "0", justifyContent: "center" }}
+        >
+          <Button
+            className="w-25 mr-5"
+            variant="outline-danger"
+            onClick={() =>
+              setCustomModalData({
+                title: "Cancelar operación.",
+                body:
+                  "¿Seguro que desea cancelar la operación? Al aceptar la información ingresada hasta el momento será eliminada.",
+                handleAccept: () => {
+                  clearFields();
+                },
+              })
+            }
+          >
+            Cancelar
+          </Button>
+          <Button className="w-25 " variant="outline-success" type="submit">
             Guardar
           </Button>
         </div>

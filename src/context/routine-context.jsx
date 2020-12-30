@@ -164,6 +164,25 @@ export function RoutineProvider(props) {
     return areValid.includes(false);
   };
 
+  function resetContext() {
+    setRoutine(new ObjectRoutine());
+  }
+
+  function removeDuplicateExercises(exercises, idBlock) {
+    let arrayAux = [...exercises];
+
+    routine.exercisesBlocks.forEach((block) => {
+      if (block.id == idBlock) {
+        block.listExercises.forEach((exercise) => {
+          arrayAux = arrayAux.filter(
+            (exerciseFound) => exercise.id != exerciseFound.id
+          );
+        });
+      }
+    });
+    return arrayAux;
+  }
+
   const value = useMemo(() => {
     return {
       routine,
@@ -176,6 +195,8 @@ export function RoutineProvider(props) {
       addInfoToRoutine,
       saveRoutine,
       isRoutineValid,
+      resetContext,
+      removeDuplicateExercises,
     };
   }, [routine]);
 

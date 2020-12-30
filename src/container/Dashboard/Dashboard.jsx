@@ -6,6 +6,7 @@ const Dashboard = ({ children, myRoutineItem, newRoutineItem }) => {
   return (
     <div>
       <SideBar myRoutineItem={myRoutineItem} newRoutineItem={newRoutineItem}/>
+      
       <Main content={children} ></Main>
     </div>
   );

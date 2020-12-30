@@ -45,9 +45,6 @@ const HomePage = () => {
     fetchShareRoutines();
   }, []);
 
- 
-  
-
   const handleRoutinesSelected = () => {
     setState({
       tabMyRoutines: true,
