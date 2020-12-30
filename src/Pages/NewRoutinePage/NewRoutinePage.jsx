@@ -57,15 +57,12 @@ const NewRoutinePage = () => {
   );
 
   const addBlockToRoutine = () => {
-    if (exercisesBlocks.length <= 9) {
+    if (exercisesBlocks.length < 10) {
       const block = new ObjectBlock(nanoid());
       addBlock(block.id);
       setExercisesBlocks([...exercisesBlocks, block]);
-
     } else {
-      error.content = "Límite de bloques alcanzado.";
-      error.variant = "danger";
-      setError(error);
+      setError({ content: "Límite de bloques alcanzado.", variant: "danger" });
     }
   };
 
@@ -76,12 +73,23 @@ const NewRoutinePage = () => {
   };
 
   const addExerciseToBlockById = (idBlock, exercise) => {
-    const listAux = exercisesBlocks.map((block) => {
-      if (block.id == idBlock) block.listExercises.push(exercise);
-      return block;
-    });
-    addExerciseToBlock(idBlock, exercise);
-    setExercisesBlocks(listAux);
+    const targetBlock = exercisesBlocks.find((block) => block.id == idBlock);
+    if (targetBlock.listExercises.length < 15) {
+      const listAux = exercisesBlocks.map((block) => {
+        if (block.id == idBlock) {
+          block.listExercises.push(exercise);
+          addExerciseToBlock(idBlock, exercise);
+        }
+        return block;
+      });
+
+      setExercisesBlocks(listAux);
+    } else {
+      setError({
+        content: "Se alcanzó el límite de ejercicios permitidos en un bloque.",
+        variant: "danger",
+      });
+    }
   };
 
   const deleteExerciseFromBlock = (idBlock, idExercise) => {
@@ -106,17 +114,19 @@ const NewRoutinePage = () => {
         body: "¿Seguro que desea guardar la rutina?",
         handleAccept: () => {
           saveRoutine();
-          error.content = "La rutina ha sido guardada con éxito.";
-          error.variant = "success";
-          setError(error);
+          setError({
+            content: "La rutina ha sido guardada con éxito.",
+            variant: "success",
+          });
           setCustomModalData(initialState.customModalData);
           clearFields();
         },
       });
     } else {
-      error.content = message;
-      error.variant = "danger";
-      setError(error);
+      setError({
+        content: message,
+        variant: "danger",
+      });
     }
   };
 
@@ -360,8 +370,14 @@ const NewRoutinePage = () => {
         </div>
         {showExercisesBlocksInput()}
         <div
-          className="w-100 mb-2 bg-black-background d-flex"
-          style={{ position: "fixed", bottom: "0", justifyContent: "center" }}
+          className="w-100 bg-black-background d-flex"
+          style={{
+            position: "fixed",
+            bottom: "0",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "7%",
+          }}
         >
           <Button
             className="w-25 mr-5"

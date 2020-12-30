@@ -3,18 +3,15 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal, InputGroup, FormControl } from "react-bootstrap";
 import SearchExerciseItem from "./SearchExerciseItem";
 import SpinnerLoading from "../../components/SpinnerLoading/SpinnerLoading";
-import { useRoutine } from "../../context/routine-context";
 
 const SearchExerciseModal = ({ idBlock, handleAddExercise }) => {
   const [mShow, setShow] = useState(false);
   const [exercises, setExercises] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState(null);
-  const { removeDuplicateExercises } = useRoutine();
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    exercises && setExercises(removeDuplicateExercises(exercises, idBlock));
     setShow(true);
   };
 
@@ -30,7 +27,7 @@ const SearchExerciseModal = ({ idBlock, handleAddExercise }) => {
 
   const fecthExercises = async () => {
     const { data } = await Axios.get("/api/exercises?search=" + query);
-    setExercises(removeDuplicateExercises(data, idBlock));
+    setExercises(data);
     setIsLoading(false);
   };
 
