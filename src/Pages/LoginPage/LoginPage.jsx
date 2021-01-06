@@ -72,6 +72,7 @@ const LoginPage = () => {
                   className="bg-primary-surface-8dp text-primary-white border-0"
                   type="email"
                   placeholder="Ingresa tu correo electrónico"
+                  maxLength="100"
                   onChange={onHandleChange}
                 />
                 <Form.Text className="text-primary-white">
@@ -88,6 +89,7 @@ const LoginPage = () => {
                   autoComplete="on"
                   type="password"
                   placeholder="Contraseña"
+                  maxLength="300"
                   onChange={onHandleChange}
                 />
               </Form.Group>

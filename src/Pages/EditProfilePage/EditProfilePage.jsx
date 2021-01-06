@@ -63,6 +63,7 @@ const EditProfilePage = () => {
                     <Form.Control
                       name="first_name"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
+                      maxLength="80"
                       defaultValue={user.first_name}
                       ref={register({
                         required: "Este campo es requerido",
@@ -92,6 +93,7 @@ const EditProfilePage = () => {
                       name="last_name"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                       defaultValue={user.last_name}
+                      maxLength="100"
                       ref={register({
                         required: "Este campo es requerido",
                         maxLength: {
@@ -122,6 +124,7 @@ const EditProfilePage = () => {
                       name="username"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                       defaultValue={user.username}
+                      maxLength="100"
                       ref={register({
                         required: "Este campo es requerido",
                         maxLength: {
@@ -145,6 +148,7 @@ const EditProfilePage = () => {
                     <Form.Control
                       name="email"
                       type="email"
+                      maxLength="150"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                       defaultValue={user.email}
                       ref={register({
@@ -174,8 +178,10 @@ const EditProfilePage = () => {
                 <Form.Control
                   as="textarea"
                   name="bio"
+                  maxLength="450"
                   className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                   defaultValue={user.bio}
+                  style={{maxHeight: "115px"}}
                   ref={register({
                     maxLength: {
                       value: 350,
