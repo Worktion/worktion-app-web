@@ -236,6 +236,7 @@ const NewRoutinePage = () => {
                       placeholder="Ingrese la descripción"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                       maxLength="350"
+                      style={{ maxHeight: "113px" }}
                       ref={register({
                         required: "Este campo es requerido",
                         maxLength: {

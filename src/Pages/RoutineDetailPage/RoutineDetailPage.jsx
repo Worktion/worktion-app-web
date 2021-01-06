@@ -8,6 +8,7 @@ import moment from "moment";
 import * as constants from "../../constants/constants";
 import { Container, Col, Row, Form, Image } from "react-bootstrap";
 import defaultRoutineImage from "../../images/defaultRoutineImage.jpg";
+import LogoWorktion from "../../images/LogoWorktion.png";
 
 const RoutineDetailPage = () => {
   const { idRoutine } = useParams();
@@ -15,8 +16,12 @@ const RoutineDetailPage = () => {
   const [routineDetail, setRoutineDetail] = useState({});
   useEffect(() => {
     const fetchRoutineDetail = async () => {
-      const { data } = await Axios.get(`/api/routines/${idRoutine}/`);
-      setRoutineDetail(data);
+      try {
+        const { data } = await Axios.get(`/api/routines/${idRoutine}/`);
+        setRoutineDetail(data);
+      } catch (error) {
+        setRoutineDetail(false);
+      }
       setIsLoading(false);
     };
 
@@ -25,6 +30,16 @@ const RoutineDetailPage = () => {
 
   if (isLoading) {
     return <SpinnerLoading />;
+  }
+
+  if (!routineDetail) {
+    return (
+      <div className="h-100 d-flex flex-column justify-content-center align-items-center text-primary-white">
+      <Image src={LogoWorktion}></Image>
+        <h1>No se ha encontrado la rutina 😔 </h1>
+
+      </div>
+    );
   }
 
   return (
@@ -40,7 +55,11 @@ const RoutineDetailPage = () => {
           <Row>
             <Col xs lg="3">
               <Image
-                src={routineDetail.cover ? routineDetail.cover : defaultRoutineImage}
+                src={
+                  routineDetail.cover
+                    ? routineDetail.cover
+                    : defaultRoutineImage
+                }
                 alt="Imagen de la rutina"
                 style={{
                   height: "175px",
@@ -73,7 +92,7 @@ const RoutineDetailPage = () => {
                       name="muscleGroup"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                       disabled={true}
-                      style={{ maxWidth: "120px" }}
+                      style={{ maxWidth: "150px" }}
                       defaultValue={
                         constants.muscleGroups[routineDetail.muscle_group]
                       }
