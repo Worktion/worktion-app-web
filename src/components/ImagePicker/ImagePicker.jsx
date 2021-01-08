@@ -16,10 +16,6 @@ const StyledIconCancel = styled(MdCancel)`
 const ImagePicker = ({ defaultImage, register, shape, width, height }) => {
   const [imageFile, setImageFile] = useState();
 
-  const handleClickCancelImage = () => {
-    setImageFile(null);
-  };
-
   const cutName = (name) => {
     let shortname = "";
     if (name.length <= 21) {
@@ -37,7 +33,9 @@ const ImagePicker = ({ defaultImage, register, shape, width, height }) => {
           <StyledIconCancel
             className="text-primary-white"
             size="1.5rem"
-            onClick={handleClickCancelImage}
+            onClick={() => {
+              setImageFile(null);
+            }}
           ></StyledIconCancel>
         )}
         <Image
