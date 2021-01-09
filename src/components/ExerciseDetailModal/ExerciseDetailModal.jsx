@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Modal, Row, Col } from "react-bootstrap";
+import * as constants from "../../constants/constants"
 
 const ExerciseDetailModal = ({ show, handleClose, exercise }) => {
     return (
@@ -15,18 +16,19 @@ const ExerciseDetailModal = ({ show, handleClose, exercise }) => {
                     <Modal.Title>{exercise.name}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Row>
-                        <Col xs lg="4">
-                            <img
-                                src={exercise.images[0].image}
-                                alt="Imagen de ejercicio"
-                                style={{ width: "150px", height: "150px" }}
-                                title={exercise.name}
-                                className="rounded"
-                            />
-                        </Col>
-                        <Col>
-                            <Form>
+
+                    <Form>
+                        <Row>
+                            <Col xs="auto">
+                                <img
+                                    src={exercise.images[0].image}
+                                    alt="Imagen de ejercicio"
+                                    style={{ width: "170px", height: "170px" }}
+                                    title={exercise.name}
+                                    thumbnail
+                                />
+                            </Col>
+                            <Col xs="auto">
                                 <Form.Group>
                                     <Form.Label className="text-primary-white">
                                         Nombre
@@ -35,7 +37,7 @@ const ExerciseDetailModal = ({ show, handleClose, exercise }) => {
                                         className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                                         defaultValue={exercise.name}
                                         readOnly
-                                    > 
+                                    >
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
@@ -46,35 +48,40 @@ const ExerciseDetailModal = ({ show, handleClose, exercise }) => {
                                         className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                                         defaultValue={exercise.similar_names}
                                         readOnly
-                                    > 
+                                    >
                                     </Form.Control>
                                 </Form.Group>
-                                <Form.Group>
-                                    <Form.Label className="text-primary-white">
-                                        Descripción
+
+                            </Col>
+                        </Row>
+                        <Form.Group>
+                            <Form.Label className="text-primary-white">
+                                Dificultad
                                     </Form.Label>
-                                    <Form.Control
-                                        as="textarea"
-                                        className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
-                                        defaultValue={exercise.description}
-                                        readOnly
-                                    > 
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label className="text-primary-white">
-                                        Dificultad
+                            <Form.Control
+                                className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
+                                readOnly
+                                defaultValue={
+                                    constants.routineDifficulties[
+                                    exercise.dificulty
+                                    ]
+                                }
+                            >
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label className="text-primary-white">
+                                Descripción
                                     </Form.Label>
-                                    <Form.Control
-                                        className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
-                                        defaultValue={exercise.dificulty}
-                                        readOnly
-                                    > 
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form>
-                        </Col>
-                    </Row>
+                            <Form.Control
+                                as="textarea"
+                                className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
+                                defaultValue={exercise.description}
+                                readOnly
+                            >
+                            </Form.Control>
+                        </Form.Group>
+                    </Form>
                 </Modal.Body>
 
             </Modal>
