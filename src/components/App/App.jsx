@@ -8,9 +8,11 @@ import HomePage from "../../Pages/HomePage/HomePage";
 import RegisterPage from "../../Pages/RegisterPage/RegisterPage";
 import NewRoutinePage from "../../Pages/NewRoutinePage/NewRoutinePage";
 import Dashboard from "../../container/Dashboard/Dashboard";
+import DashboardLogout from "../../container/Dashboard/DashboardLogout";
 import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
 import EditProfilePage from "../../Pages/EditProfilePage/EditProfilePage";
 import RoutineDetailPage from "../../Pages/RoutineDetailPage/RoutineDetailPage";
+import RoutinePublicPage from "../../Pages/RoutinePublicPage/RoutinePublicPage";
 
 setAxiosInterceptors();
 
@@ -41,6 +43,9 @@ const LoginRoutes = () => {
       <Route exact path="/editProfile">
         <Dashboard children={<EditProfilePage></EditProfilePage>}></Dashboard>
       </Route>
+      <Route exact path="/public/routine/:idRoutine">
+        <Dashboard children={<RoutinePublicPage />}></Dashboard>
+      </Route>
       <Route path="*">
         <Redirect to="/home" />
       </Route>
@@ -59,6 +64,9 @@ const LogoutRoutes = () => {
       </Route>
       <Route exact path="/:username/routine/:idRoutine/public">
         <h1>Rutina compartida publicamente</h1>
+      </Route>
+      <Route exact path="/public/routine/:idRoutine">
+        <DashboardLogout children={<RoutinePublicPage />} />
       </Route>
       <Route path="*">
         <Redirect to="/login" />
