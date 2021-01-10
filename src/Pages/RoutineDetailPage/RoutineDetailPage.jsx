@@ -9,20 +9,29 @@ import * as constants from "../../constants/constants";
 import { Container, Col, Row, Form, Image } from "react-bootstrap";
 import defaultRoutineImage from "../../images/defaultRoutineImage.jpg";
 import LogoWorktion from "../../images/LogoWorktion.png";
-
-
+import { useUser } from "../../context/user-context";
 
 const RoutineDetailPage = () => {
   const { idRoutine } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [routineDetail, setRoutineDetail] = useState({});
+  const { user } = useUser();
+
   useEffect(() => {
     const fetchRoutineDetail = async () => {
       try {
         const { data } = await Axios.get(`/api/routines/${idRoutine}/`);
         setRoutineDetail(data);
       } catch (error) {
-        setRoutineDetail(false);
+        const routineShare = await isShareWithMe();
+        if (routineShare) {
+          const { data } = await Axios.get(
+            `/api/share/routines/${routineShare.id}/`
+          );
+          setRoutineDetail(data.routine);
+        } else {
+          setRoutineDetail(false);
+        }
       }
       setIsLoading(false);
     };
@@ -31,9 +40,16 @@ const RoutineDetailPage = () => {
   }, []);
 
   const isShareWithMe = async () => {
-    const { data } = await Axios.get(`/api/share/routines/${idRoutine}/occupants/`);
-  
-  }
+    const { data } = await Axios.get(
+      `/api/share/routines/${idRoutine}/occupants/`
+    );
+    let routine = false;
+    data.forEach((shareRoutine) => {
+      shareRoutine.occupant.id == user.id && (routine = shareRoutine);
+    });
+
+    return routine;
+  };
 
   if (isLoading) {
     return <SpinnerLoading />;
@@ -42,12 +58,11 @@ const RoutineDetailPage = () => {
   if (!routineDetail) {
     return (
       <div className="h-100 d-flex flex-column justify-content-center align-items-center text-primary-white">
-      <Image src={LogoWorktion}></Image>
+        <Image src={LogoWorktion}></Image>
         <h1>No se ha encontrado la rutina 😔 </h1>
-
       </div>
     );
-  } 
+  }
 
   return (
     <>
@@ -85,7 +100,7 @@ const RoutineDetailPage = () => {
                     <Form.Control
                       as="textarea"
                       name="description"
-                      style={{maxHeight: "115px"}}
+                      style={{ maxHeight: "115px" }}
                       placeholder="Ingrese la descripción"
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                       disabled={true}
