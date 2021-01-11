@@ -3,6 +3,7 @@ import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { UserProvider } from "../context/user-context";
 
+
 const Wrapper = ({ children }) => {
   return (
     <UserProvider>
@@ -16,6 +17,8 @@ const customRender = (ui, options) =>
 
 // re-export everything
 export * from "@testing-library/react";
+
+export * from "@testing-library/jest-dom"
 
 // override render method
 export { customRender as render };
