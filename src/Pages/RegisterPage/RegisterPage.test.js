@@ -1,39 +1,135 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import App from "../../components/App/App";
-import { render, fireEvent, screen } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  screen,
+  waitFor,
+  act,
+} from "../../helpers/tests-helper";
+import RegisterPage from "./RegisterPage";
+import mockedAxios from "axios";
 
-it("renders without crashing", async () => {
-  render(<App />);
-
-  fireEvent.click(screen.getByText(/¿Aún no tienes cuenta?/i));
-
-  fireEvent.change(screen.getByLabelText(/nombre/i), {
-    target: { value: "Test" },
+describe("<RegisterPage />", () => {
+  it("renders without crashing", () => {
+    render(<RegisterPage />);
+    expect(screen.getByText(/registro/i));
   });
 
-  fireEvent.change(screen.getByLabelText(/apellidos/i), {
-    target: { value: "test" },
+  it("validates required fields", async () => {
+    render(<RegisterPage />);
+
+    fireEvent.click(screen.getByText("Registrarse"));
+
+    expect(await waitFor(() => screen.getAllByText("Este campo es requerido")));
   });
 
-  fireEvent.change(screen.getByLabelText(/usuario/i), {
-    target: { value: "userTest" },
+  it("validates password length", async () => {
+    render(<RegisterPage />);
+
+    fireEvent.change(screen.getByLabelText("Contraseña"), {
+      target: { value: "1234" },
+    });
+
+    fireEvent.click(screen.getByText("Registrarse"));
+
+    expect(
+      await waitFor(() =>
+        screen.getByText("La contraseña debe contener mínimo 8 carácteres")
+      )
+    );
   });
 
-  fireEvent.change(screen.getByLabelText(/email/i), {
-    target: { value: "test@gmail.com" },
+  it("validates password and confirm password are the same", async () => {
+    render(<RegisterPage />);
+
+    fireEvent.change(screen.getByLabelText("Contraseña"), {
+      target: { value: "Contra_123" },
+    });
+
+    fireEvent.change(screen.getByLabelText("Confirmar contraseña"), {
+      target: { value: "Contra" },
+    });
+
+    fireEvent.click(screen.getByText("Registrarse"));
+
+    expect(
+      await waitFor(() => screen.getByText("Las contraseñas deben coincidir"))
+    );
   });
 
-  fireEvent.change(screen.getByLabelText("Contraseña"), {
-    target: { value: "12345678" },
+  it("sends valid fields with axios", async () => {
+    const data = {
+      data: {
+        id: 1,
+        username: "userTest",
+      },
+    };
+
+    mockedAxios.post.mockResolvedValueOnce(data);
+
+    render(<RegisterPage />);
+
+    fireEvent.change(screen.getByLabelText("Nombre"), {
+      target: { value: "Test" },
+    });
+
+    fireEvent.change(screen.getByLabelText("Apellidos"), {
+      target: { value: "test" },
+    });
+
+    fireEvent.change(screen.getByLabelText("Usuario"), {
+      target: { value: "userTest" },
+    });
+
+    fireEvent.change(screen.getByLabelText("Email"), {
+      target: { value: "test@gmail.com" },
+    });
+
+    fireEvent.change(screen.getByLabelText("Contraseña"), {
+      target: { value: "Contra_123" },
+    });
+
+    fireEvent.change(screen.getByLabelText("Confirmar contraseña"), {
+      target: { value: "Contra_123" },
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("Registrarse"));
+    });
+
+    // expect(
+    //   await waitFor(() => screen.getByText("Las contraseñas deben coincidir"))
+    // );
   });
 
-  fireEvent.change(screen.getByLabelText("Confirmar contraseña"), {
-    target: { value: "12345678" },
-  });
+  // fireEvent.click(screen.getByText(/¿Aún no tienes cuenta?/i));
 
-  fireEvent.click(screen.getByText(/Registrarse/i));
+  // fireEvent.change(screen.getByLabelText(/nombre/i), {
+  //   target: { value: "Test" },
+  // });
 
-  const alert = await screen.findByRole("alert");
-  expect(alert).toHaveTextContent(/exitosamente/i);
+  // fireEvent.change(screen.getByLabelText(/apellidos/i), {
+  //   target: { value: "test" },
+  // });
+
+  // fireEvent.change(screen.getByLabelText(/usuario/i), {
+  //   target: { value: "userTest" },
+  // });
+
+  // fireEvent.change(screen.getByLabelText(/email/i), {
+  //   target: { value: "test@gmail.com" },
+  // });
+
+  // fireEvent.change(screen.getByLabelText("Contraseña"), {
+  //   target: { value: "12345678" },
+  // });
+
+  // fireEvent.change(screen.getByLabelText("Confirmar contraseña"), {
+  //   target: { value: "12345678" },
+  // });
+
+  // fireEvent.click(screen.getByText(/Registrarse/i));
+
+  // const alert = await screen.findByRole("alert");
+  // expect(alert).toHaveTextContent(/exitosamente/i);
 });
