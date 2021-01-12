@@ -12,7 +12,7 @@ import mockedAxios from "axios";
 describe("<RegisterPage />", () => {
   it("renders without crashing", () => {
     render(<RegisterPage />);
-    expect(screen.getByText(/registro/i));
+    expect(screen.getByText("Registro")).toBeInTheDocument();
   });
 
   it("validates required fields", async () => {
@@ -20,7 +20,9 @@ describe("<RegisterPage />", () => {
 
     fireEvent.click(screen.getByText("Registrarse"));
 
-    expect(await waitFor(() => screen.getAllByText("Este campo es requerido")));
+    expect(
+      await waitFor(() => screen.getAllByText("Este campo es requerido")[0])
+    ).toBeInTheDocument();
   });
 
   it("validates password length", async () => {
@@ -36,7 +38,7 @@ describe("<RegisterPage />", () => {
       await waitFor(() =>
         screen.getByText("La contraseña debe contener mínimo 8 carácteres")
       )
-    );
+    ).toBeInTheDocument();
   });
 
   it("validates password and confirm password are the same", async () => {
@@ -54,7 +56,7 @@ describe("<RegisterPage />", () => {
 
     expect(
       await waitFor(() => screen.getByText("Las contraseñas deben coincidir"))
-    );
+    ).toBeInTheDocument();
   });
 
   it("sends valid fields with axios", async () => {
@@ -96,6 +98,9 @@ describe("<RegisterPage />", () => {
     await act(async () => {
       fireEvent.click(screen.getByText("Registrarse"));
     });
+
+    expect(
+      screen.getByText("Te has registrado exitosamente, ahora inicia sesión :)")
+    ).toBeInTheDocument();
   });
-  
 });

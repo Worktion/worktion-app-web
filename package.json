@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "start": "webpack serve --config webpack.dev.js",
-    "test": "jest --verbose"
+    "test": "jest --coverage"
   },
   "keywords": [],
   "author": "",

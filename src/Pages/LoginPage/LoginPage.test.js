@@ -15,8 +15,10 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("<LoginPage />", () => {
+
   it("renders without crashing", () => {
     render(<LoginPage />);
+    expect(screen.getByText("Iniciar sesión")).toBeInTheDocument();
   });
 
   it("validates empty fields", async () => {
@@ -51,15 +53,32 @@ describe("<LoginPage />", () => {
     );
   });
 
-  it("sends valid fields with axios", async () => {
+  it("sends login valid fields with axios", async () => {
+    Storage.prototype.setItem = jest.fn();
+    Storage.prototype.getItem = jest.fn();
+
     const dataPost = {
       data: {
-        access: 123,
+        access:
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjA1NTA1NTYzLCJqdGkiOiJhNTI2M2YyODVkMWM0MTFjYjQ1MzgyY2Q0OWRlYjgxYSIsInVzZXJfaWQiOjF9.jQuGqskTbuKfJTcUC31fVzi-JDt1bb2xJi9ySbyyqN8",
         refresh: 123,
       },
     };
 
+    const dataGet = {
+      data: {
+        email: "juan@gmail.com",
+        username: "juan123",
+        first_name: "Juan",
+        last_name: "Pérez",
+        bio: "Una corta biografía sobre Juan",
+        birth_date: "1998-04-14",
+        cover: "path",
+      },
+    };
+
     mockedAxios.post.mockResolvedValueOnce(dataPost);
+    mockedAxios.get.mockResolvedValueOnce(dataGet);
 
     render(<LoginPage />);
 
@@ -81,6 +100,6 @@ describe("<LoginPage />", () => {
 
     fireEvent.click(screen.getByText("¿Aún no tienes cuenta?"));
 
-    expect(screen.getByText("Registrarse"));
+    expect(screen.getByText("Registrarse")).toBeInTheDocument();
   });
 });
