@@ -22,7 +22,9 @@ const UserOccupantItem = ({ user, handleRemoveOccupant }) => {
 
                 </Col>
                 <Col xs="auto">
-                    <Button size="sm" variant="secondary">Quitar usuario</Button>
+                    <Button size="sm" variant="secondary"
+                        onClick={()=> handleRemoveOccupant(user)}
+                    >Quitar usuario</Button>
                 </Col>
             </Row>
         </>

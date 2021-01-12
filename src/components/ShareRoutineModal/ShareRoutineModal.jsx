@@ -2,16 +2,19 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { Modal, InputGroup, FormControl, Row, Button, Col } from "react-bootstrap"
 import UserOccupantItem from "./UserOccupantItem";
+import SpinnerLoading from "../../components/SpinnerLoading/SpinnerLoading";
 
 const ShareRoutineModal = ({ show, handleClose, routine }) => {
     const [occupants, setOccupants] = useState([]);
     const [publicRoutine, setPublicRoutine] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const [query, setQuery] = useState(null);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
         fecthOccupants();
         fecthPublicRoutine();
+        setIsLoading(true);
     }, []);
 
     useEffect(() => {
@@ -25,23 +28,69 @@ const ShareRoutineModal = ({ show, handleClose, routine }) => {
     const fecthUsers = async () => {
         const { data } = await Axios.get("/api/users?search=" + query);
         setUsers(data);
-        console.log(data);
-      };
+    };
     const fecthOccupants = async () => {
         const { data } = await Axios.get("/api/share/routines/" + routine.id + "/occupants/");
         setOccupants(data);
-        console.log(data);
+        setIsLoading(false);
     };
     const fecthPublicRoutine = async () => {
-        try{
+        try {
             const { data } = await Axios.get("/api/share/public/routine/" + routine.id + "/");
             setPublicRoutine(data);
-            console.log(data);
-        } catch(error){
+        } catch (error) {
             setPublicRoutine(null);
-            console.log(error);
         }
-        
+    };
+    const fecthDeleteOccupant = async (user) =>{
+        try{
+            const path = "/api/share/routines/" + routine.id + "/occupants/" + user.id + "/";
+            const {res} = await Axios.delete(path);
+            return true;
+        } catch (error){
+            return false;
+        }
+    };
+    const fecthDeleteSharePublicRoutine = async(idPublicRoutine) =>{
+        try{
+            const path = "api/share/public/" + idPublicRoutine + "/";
+            const {res} = await Axios.delete(path);
+            return true;
+        }catch(error){
+            return false;
+        }
+    };
+
+    const fecthCreatePublicLink = async (idRoutine) => {
+        try{
+            const request = {
+                routine_id: idRoutine,
+            }
+            const { data } = await Axios.post("/api/share/public/", request);
+            setPublicRoutine(data);
+        }catch(error){
+        }
+    };
+
+    const deleteOccupant = (user) => {
+        if(fecthDeleteOccupant(user.occupant)){
+            const newOccupants = occupants.filter(
+                (occupant) => occupant.id != user.id
+            );
+            setOccupants(newOccupants);
+        }
+    };
+
+    const leftToSharePublicRoutine= () =>{
+        if(publicRoutine != null){
+            if(fecthDeleteSharePublicRoutine(publicRoutine.id)){
+                
+                setPublicRoutine(null);
+            }
+        }
+    };
+    const createPublicLink = () => {
+        fecthCreatePublicLink(routine.id);
     };
 
     return (
@@ -59,8 +108,8 @@ const ShareRoutineModal = ({ show, handleClose, routine }) => {
                 <Modal.Body>
                     <div className="container-md">
                         <h4>Compartida con otros usuarios</h4>
-                        <Row>
-                            <InputGroup className="mb-3">
+                        <Row className="justify-content-end">
+                            {/* <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
                                     <InputGroup.Text id="basic-addon1">Usuario</InputGroup.Text>
                                 </InputGroup.Prepend>
@@ -69,18 +118,32 @@ const ShareRoutineModal = ({ show, handleClose, routine }) => {
                                     value={query ? query : ""}
                                     onChange={handleChange}
                                 />
-                            </InputGroup>
+                            </InputGroup> */}
+                            <Row className="m-3 ">
+                                <Button
+                                    className=""
+                                    size="m"
+                                    variant="primary"
+                                >Compartir a usuario</Button>
+
+                            </Row>
                         </Row>
                         <div className="container overflow-auto h-auto">
-                            {occupants.length == 0 ? (
-                                <p>No hay usuarios compartiendo</p>
-                            ):(
-                                occupants.map((user) =>(
-                                    <UserOccupantItem
-                                        key={user.id}
-                                        user={user}
-                                    ></UserOccupantItem>
-                                ))
+                        {isLoading ? (
+                            <SpinnerLoading></SpinnerLoading>
+                            ) : (
+                                occupants.length == 0 ? (
+                                    <p className="m-3">Esta rutina no ha sido compartida con nadie</p>
+                                ) : (
+                                        occupants.map((user) => (
+                                            <UserOccupantItem
+                                                key={user.id}
+                                                user={user}
+                                                handleRemoveOccupant={deleteOccupant}
+                                            ></UserOccupantItem>
+                                        ))
+                                    )
+
                             )}
                         </div>
 
@@ -88,31 +151,35 @@ const ShareRoutineModal = ({ show, handleClose, routine }) => {
                     <div className="container-md">
                         <h4>Compartida publicamente</h4>
                         {publicRoutine == null ? (
-                            <p>No se ha compartido</p>
-                        ) : (
-                            <>
                             <Row>
-                                <Col lg>
-                                    <InputGroup className="mb-3">
-                                        <InputGroup.Prepend>
-                                            <InputGroup.Text id="basic-addon1">Link</InputGroup.Text>
-                                        </InputGroup.Prepend>
-                                        <FormControl
-                                            value={"https://worktion.com/public/routines/" + publicRoutine.id}
-                                            readOnly
-                                        />
-                                    </InputGroup>
-
-                                </Col>
-                                <Col xl="auto">
-                                    <Button variant="link">Copiar</Button>
-                                </Col>
+                                <Button onClick={createPublicLink}
+                                    className="m-3" size="sm" variant="primary">
+                                    Generar link compartido
+                                </Button>
                             </Row>
-                            <Button size="sm" variant="secondary">Dejar de compartir</Button>
-                            </>
-                            
+                        ) : (
+                                <>
+                                    <Row>
+                                        <Col lg>
+                                            <InputGroup className="mb-3">
+                                                <InputGroup.Prepend>
+                                                    <InputGroup.Text id="basic-addon1">Link</InputGroup.Text>
+                                                </InputGroup.Prepend>
+                                                <FormControl
+                                                    value={"https://localhost:3000/public/routine/" + publicRoutine.id}
+                                                    readOnly
+                                                />
+                                            </InputGroup>
 
-                        )}
+                                        </Col>
+                                        <Col xl="auto">
+                                            <Button variant="link">Copiar</Button>
+                                        </Col>
+                                    </Row>
+                                    <Button onClick={leftToSharePublicRoutine}
+                                    size="sm" variant="secondary">Dejar de compartir</Button>
+                                </>
+                            )}
 
 
                     </div>
