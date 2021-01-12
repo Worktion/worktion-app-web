@@ -1,67 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import BlockExercises from "../../components/BlockExercises/BlockExercises";
-import Axios from "axios";
-import SpinnerLoading from "../../components/SpinnerLoading/SpinnerLoading";
 import { RiFireFill, RiTimeFill } from "@meronex/icons/ri";
 import moment from "moment";
-import * as constants from "../../constants/constants";
 import { Container, Col, Row, Form, Image } from "react-bootstrap";
-import defaultRoutineImage from "../../images/defaultRoutineImage.jpg";
-import LogoWorktion from "../../images/LogoWorktion.png";
-import { useUser } from "../../context/user-context";
+import * as constants from "../../constants/constants";
+import BlockExercises from "../../components/BlockExercises/BlockExercises";
+import SpinnerLoading from "../../components/SpinnerLoading/SpinnerLoading";
+import Axios from "axios";
+import { useParams } from "react-router-dom";
 
-const RoutineDetailPage = () => {
-  const { idRoutine } = useParams();
+const RoutinePublicPage = () => {
+  const [routine, setRoutine] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [routineDetail, setRoutineDetail] = useState({});
-  const { user } = useUser();
+
+  const { idRoutine } = useParams();
 
   useEffect(() => {
-    const fetchRoutineDetail = async () => {
+    const fetchRoutinePublic = async () => {
       try {
-        const { data } = await Axios.get(`/api/routines/${idRoutine}/`);
-        setRoutineDetail(data);
+        const { data } = await Axios.get(`/api/share/public/${idRoutine}/`);
+        setRoutine(data.routine);
       } catch (error) {
-        const routineShare = await isShareWithMe();
-        if (routineShare) {
-          const { data } = await Axios.get(
-            `/api/share/routines/${routineShare.id}/`
-          );
-          setRoutineDetail(data.routine);
-        } else {
-          setRoutineDetail(false);
-        }
+        setRoutine(false);
       }
       setIsLoading(false);
     };
-
-    fetchRoutineDetail();
+    fetchRoutinePublic();
   }, []);
 
-  const isShareWithMe = async () => {
-    const { data } = await Axios.get(
-      `/api/share/routines/${idRoutine}/occupants/`
-    );
-    let routine = false;
-    data.forEach((shareRoutine) => {
-      shareRoutine.occupant.id == user.id && (routine = shareRoutine);
-    });
-
-    return routine;
-  };
 
   if (isLoading) {
     return <SpinnerLoading />;
-  }
-
-  if (!routineDetail) {
-    return (
-      <div className="h-100 d-flex flex-column justify-content-center align-items-center text-primary-white">
-        <Image src={LogoWorktion}></Image>
-        <h1>No se ha encontrado la rutina 😔 </h1>
-      </div>
-    );
   }
 
   return (
@@ -70,18 +38,15 @@ const RoutineDetailPage = () => {
         className="text-primary-white mt-3 mb-3"
         style={{ borderBottom: "1px solid" }}
       >
-        <h3>{routineDetail.name}</h3>
+        <h3>{routine.name}</h3>
       </div>
+
       <div>
         <Container className="mt-5">
           <Row>
             <Col xs lg="3">
               <Image
-                src={
-                  routineDetail.cover
-                    ? routineDetail.cover
-                    : defaultRoutineImage
-                }
+                src={routine.cover}
                 alt="Imagen de la rutina"
                 style={{
                   height: "175px",
@@ -90,6 +55,7 @@ const RoutineDetailPage = () => {
                 className="rounded"
               ></Image>
             </Col>
+
             <Col>
               <Form.Row>
                 <Col className="col-lg-6">
@@ -100,11 +66,11 @@ const RoutineDetailPage = () => {
                     <Form.Control
                       as="textarea"
                       name="description"
-                      style={{ maxHeight: "115px" }}
                       placeholder="Ingrese la descripción"
+                      style={{maxHeight: "115px"}}
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                       disabled={true}
-                      defaultValue={routineDetail.description}
+                      defaultValue={routine.description}
                     />
                   </Form.Group>
                   <Form.Group>
@@ -117,7 +83,7 @@ const RoutineDetailPage = () => {
                       disabled={true}
                       style={{ maxWidth: "150px" }}
                       defaultValue={
-                        constants.muscleGroups[routineDetail.muscle_group]
+                        constants.muscleGroups[routine.muscle_group]
                       }
                     />
                   </Form.Group>
@@ -141,9 +107,7 @@ const RoutineDetailPage = () => {
                             disabled={true}
                             style={{ maxWidth: "120px" }}
                             defaultValue={
-                              constants.routineDifficulties[
-                                routineDetail.dificulty
-                              ]
+                              constants.routineDifficulties[routine.dificulty]
                             }
                           />
                         </Form.Group>
@@ -169,7 +133,7 @@ const RoutineDetailPage = () => {
                           disabled={true}
                           style={{ maxWidth: "120px" }}
                           defaultValue={moment
-                            .utc(routineDetail.time * 1000)
+                            .utc(routine.time * 1000)
                             .format("HH:mm:ss")}
                         />
                       </Form.Group>
@@ -181,6 +145,7 @@ const RoutineDetailPage = () => {
           </Row>
         </Container>
       </div>
+
       <div
         style={{
           paddingLeft: "5rem",
@@ -189,8 +154,8 @@ const RoutineDetailPage = () => {
           paddingBottom: "2rem",
         }}
       >
-        {routineDetail.blocks &&
-          routineDetail.blocks.map((block) => (
+        {routine.blocks &&
+          routine.blocks.map((block) => (
             <BlockExercises key={block.id} block={block}></BlockExercises>
           ))}
       </div>
@@ -198,4 +163,4 @@ const RoutineDetailPage = () => {
   );
 };
 
-export default RoutineDetailPage;
+export default RoutinePublicPage;
