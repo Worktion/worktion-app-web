@@ -5,6 +5,7 @@ import Axios from "axios";
 import { Nav } from "react-bootstrap";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import RoutineDetailModal from "../../components/RoutineDetailModal/RoutineDetailModal"
 
 const StyledNavLink = styled.span`
   display: block;
