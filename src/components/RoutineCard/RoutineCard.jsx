@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Card, DropdownButton, Dropdown, Row } from "react-bootstrap";
 import { FaLockOpen, FaLock, FaUserCircle } from "@meronex/icons/fa";
 import { RiFireFill, RiTimeFill } from "@meronex/icons/ri";
@@ -6,7 +6,9 @@ import { BiDumbbell } from "@meronex/icons/bi";
 import * as constants from "../../constants/constants";
 import moment from "moment";
 import styled from "styled-components";
-import ShareRoutineModal from "../../components/ShareRoutineModal/ShareRoutineModal"
+import Axios from "axios";
+import ShareRoutineModal from "../../components/ShareRoutineModal/ShareRoutineModal";
+import CustomModal from "../CustomModal/CustomModal";
 
 const StyledDropDownButton = styled(DropdownButton)`
   &:hover {
@@ -24,8 +26,16 @@ const IconSpan = ({ icon, content, marginBottom }) => {
   );
 };
 
-const RoutineCard = ({ routine, user, handleShowDetail }) => {
+const RoutineCard = ({
+  routine,
+  user,
+  handleShowDetail,
+  isShared,
+  removeRoutine,
+}) => {
   const [showShareModal, setShowShareModal] = useState(null);
+  const [showCustomModal, setShowCustomModal] = useState(null);
+
   const closeShareModal = () => {
     setShowShareModal(false);
   };
@@ -34,16 +44,35 @@ const RoutineCard = ({ routine, user, handleShowDetail }) => {
     setShowShareModal(routine);
   };
 
-  return (
+  const deleteRoutine = async () => {
+    try {
+      await Axios.delete(`/aroutine.id}/`);
+      removeRoutine(routine);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  return (
     <>
+      {showCustomModal && (
+        <CustomModal
+          active={showCustomModal ? true : false}
+          title={"Eliminar rutina"}
+          body={
+            "¿Seguro que desea eliminar la rutina? Esta acción es permanente."
+          }
+          handleAccept={deleteRoutine}
+          handleClose={() => setShowCustomModal(null)}
+        ></CustomModal>
+      )}
       {showShareModal && (
-      <ShareRoutineModal
-        show={showShareModal ? true : false}
-        handleClose={closeShareModal}
-        routine={showShareModal ? showShareModal : null}
-      ></ShareRoutineModal>
-    )}
+        <ShareRoutineModal
+          show={showShareModal ? true : false}
+          handleClose={closeShareModal}
+          routine={showShareModal ? showShareModal : null}
+        ></ShareRoutineModal>
+      )}
       <Card
         className="bg-white-with-opacity text-primary-white shadow"
         style={{ width: "20rem", margin: "1rem", borderRadius: "3%" }}
@@ -69,10 +98,17 @@ const RoutineCard = ({ routine, user, handleShowDetail }) => {
               <Dropdown.Item>Editar rutina</Dropdown.Item>
               <Dropdown.Item onClick={() => handleShowDetail(routine)}>
                 Ver detalle de rutina
-            </Dropdown.Item>
-              <Dropdown.Item onClick={() => showShareRoutine(routine)}>
-                Compartir rutina
               </Dropdown.Item>
+              {!isShared && (
+                <>
+                  <Dropdown.Item onClick={() => showShareRoutine(routine)}>
+                    Compartir rutina
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => setShowCustomModal(true)}>
+                    Eliminar rutina
+                  </Dropdown.Item>
+                </>
+              )}
             </StyledDropDownButton>
           </Row>
 
@@ -89,11 +125,11 @@ const RoutineCard = ({ routine, user, handleShowDetail }) => {
               content={constants.routinesState.isPublic}
             />
           ) : (
-              <IconSpan
-                icon={<FaLock className="mr-2" size="1.2rem" />}
-                content={constants.routinesState.isPrivate}
-              />
-            )}
+            <IconSpan
+              icon={<FaLock className="mr-2" size="1.2rem" />}
+              content={constants.routinesState.isPrivate}
+            />
+          )}
           <IconSpan
             icon={<BiDumbbell className="mr-2" size="1.2rem" />}
             content={constants.muscleGroups[routine.muscle_group]}
@@ -108,7 +144,6 @@ const RoutineCard = ({ routine, user, handleShowDetail }) => {
           />
         </Card.Body>
       </Card>
-
     </>
   );
 };

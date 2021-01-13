@@ -5,7 +5,7 @@ import Axios from "axios";
 import { Nav } from "react-bootstrap";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import RoutineDetailModal from "../../components/RoutineDetailModal/RoutineDetailModal"
+import RoutineDetailModal from "../../components/RoutineDetailModal/RoutineDetailModal";
 
 const StyledNavLink = styled.span`
   display: block;
@@ -30,20 +30,20 @@ const HomePage = () => {
   });
 
   useEffect(() => {
-    const fetchRoutines = async () => {
-      const { data } = await Axios.get("/api/routines/");
-      setMyRoutines(data);
-      setIsLoading(false);
-    };
-
-    const fetchShareRoutines = async () => {
-      const { data } = await Axios.get("/api/share/routines/");
-      setShareRoutines(data);
-    };
-
     fetchRoutines();
     fetchShareRoutines();
   }, []);
+
+  const fetchRoutines = async () => {
+    const { data } = await Axios.get("/api/routines/");
+    setMyRoutines(data);
+    setIsLoading(false);
+  };
+
+  const fetchShareRoutines = async () => {
+    const { data } = await Axios.get("/api/share/routines/");
+    setShareRoutines(data);
+  };
 
   const handleRoutinesSelected = () => {
     setState({
@@ -63,6 +63,13 @@ const HomePage = () => {
     history.push(`/routineDetail/${routine.id}`);
   };
 
+  const removeRoutine = (routine) => {
+    const newRoutines = myRoutines.filter(
+      (element) => element.id != routine.id
+    );
+    setMyRoutines(newRoutines);
+  };
+
   const showMyRoutinesCreated = () => {
     return (
       <div className="d-flex flex-wrap">
@@ -71,6 +78,7 @@ const HomePage = () => {
             key={routine.id}
             routine={routine}
             handleShowDetail={showRoutineDetail}
+            removeRoutine={removeRoutine}
           ></RoutineCard>
         ))}
       </div>
@@ -86,6 +94,7 @@ const HomePage = () => {
             routine={share.routine}
             user={share.owner}
             handleShowDetail={showRoutineDetail}
+            isShared={true}
           ></RoutineCard>
         ))}
       </div>
