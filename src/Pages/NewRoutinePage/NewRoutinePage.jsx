@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useUser } from "../../context/user-context";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { nanoid } from "nanoid";
 import {
@@ -55,6 +55,7 @@ const NewRoutinePage = () => {
   const [customModalData, setCustomModalData] = useState(
     initialState.customModalData
   );
+  let history = useHistory();
 
   const addBlockToRoutine = () => {
     if (exercisesBlocks.length < 10) {
@@ -138,6 +139,8 @@ const NewRoutinePage = () => {
     Array.from(document.querySelectorAll("input,textarea")).forEach(
       (input) => (input.value = "")
     );
+    const e = new Event("change", { bubbles: true });
+    formControlFile.dispatchEvent(e);
     resetContext();
   };
 
@@ -361,7 +364,9 @@ const NewRoutinePage = () => {
         >
           <Button
             variant="primary-surface-8dp text-primary-white mb-5"
-            onClick={addBlockToRoutine}
+            onClick={() => {
+              addBlockToRoutine();
+            }}
           >
             <span className="d-flex align-items-center">
               <RiAddFill size="2rem"></RiAddFill>
@@ -389,7 +394,7 @@ const NewRoutinePage = () => {
                 body:
                   "¿Seguro que desea cancelar la operación? Al aceptar la información ingresada hasta el momento será eliminada.",
                 handleAccept: () => {
-                  clearFields();
+                  addBlockToRoutine();
                 },
               })
             }

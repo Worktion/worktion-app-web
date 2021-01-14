@@ -6,7 +6,12 @@ import * as constants from "../../constants/constants";
 import DropDownItems from "../DropDownItems/DropDownItems";
 import { useRoutine } from "../../context/routine-context";
 
-const ExerciseItemInput = ({ idBlock, exercise, deleteExercise }) => {
+const ExerciseItemInput = ({
+  idBlock,
+  exercise,
+  deleteExercise,
+  handleShowExerciseDetail,
+}) => {
   const { addInfoToExercise } = useRoutine();
   const [executionType, setExecutionType] = useState("Repeticiones");
   const [quantity, setQuantity] = useState(1);
@@ -74,7 +79,9 @@ const ExerciseItemInput = ({ idBlock, exercise, deleteExercise }) => {
           title=""
           variant="transparent text-primary-white border-0 btn-toogle-down"
         >
-          <Dropdown.Item>Ver información de ejercicio</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleShowExerciseDetail(exercise)}>
+            Ver información de ejercicio
+          </Dropdown.Item>
         </DropdownButton>
       </div>
       <EnCross

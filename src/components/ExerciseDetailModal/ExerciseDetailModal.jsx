@@ -25,7 +25,7 @@ const ExerciseDetailModal = ({ show, handleClose, exercise }) => {
                                     alt="Imagen de ejercicio"
                                     style={{ width: "170px", height: "170px" }}
                                     title={exercise.name}
-                                    thumbnail
+                                    
                                 />
                             </Col>
                             <Col xs="auto">
