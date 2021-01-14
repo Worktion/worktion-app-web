@@ -4,7 +4,7 @@ import { FaLockOpen, FaLock, FaUserCircle } from "@meronex/icons/fa";
 import { RiFireFill, RiTimeFill } from "@meronex/icons/ri";
 import { BiDumbbell } from "@meronex/icons/bi";
 import * as constants from "../../constants/constants";
-import moment from "moment";
+import { secondsToTime } from "../../helpers/time-helper";
 import styled from "styled-components";
 import Axios from "axios";
 import ShareRoutineModal from "../../components/ShareRoutineModal/ShareRoutineModal";
@@ -140,7 +140,7 @@ const RoutineCard = ({
           />
           <IconSpan
             icon={<RiTimeFill className="mr-2" size="1.2rem" />}
-            content={moment.utc(routine.time * 1000).format("HH:mm:ss")}
+            content={secondsToTime(routine.time)}
           />
         </Card.Body>
       </Card>
