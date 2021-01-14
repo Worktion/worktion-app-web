@@ -41,7 +41,7 @@
   "dependencies": {
     "@meronex/icons": "^4.0.0",
     "@testing-library/jest-dom": "^5.11.8",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "core-js": "^3.6.5",
     "jwt-decode": "^3.1.1",
@@ -60,6 +60,5 @@
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(scss|css)$": "identity-obj-proxy"
     }
-   
   }
 }
