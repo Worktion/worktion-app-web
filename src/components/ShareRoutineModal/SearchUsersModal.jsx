@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal, InputGroup, FormControl } from "react-bootstrap";
 import SearchUserItem from "./SearchUserItem";
 import SpinnerLoading from "../../components/SpinnerLoading/SpinnerLoading";
+import { useUser } from "../../context/user-context";
 
 const SearchUsersModal = ({ handleAddOccupant }) => {
     const [mShow, setShow] = useState(false);
     const [query, setQuery] = useState(null);
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const { user } = useUser();
 
     const handleClose = () => setShow(false);
     const handleShow = () => {
@@ -27,7 +29,10 @@ const SearchUsersModal = ({ handleAddOccupant }) => {
 
     const fecthUsers = async () => {
         const { data } = await Axios.get("/api/users?search=" + query);
-        setUsers(data);
+        const users = data.filter(
+            (u) => u.email != user.email
+        );
+        setUsers(users);
         setIsLoading(false);
     };
 
