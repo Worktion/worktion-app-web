@@ -76,7 +76,7 @@ const ShareRoutineModal = ({ show, handleClose, routine }) => {
     };
 
     const deleteOccupant = (user) => {
-        if (fecthDeleteOccupant(user.occupant)) {
+        if (fecthDeleteOccupant(user)) {
             const newOccupants = occupants.filter(
                 (occupant) => occupant.id != user.id
             );
