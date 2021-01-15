@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { nanoid } from "nanoid";
 import {
@@ -55,7 +54,6 @@ const NewRoutinePage = () => {
   const [customModalData, setCustomModalData] = useState(
     initialState.customModalData
   );
-  let history = useHistory();
 
   const addBlockToRoutine = () => {
     if (exercisesBlocks.length < 10) {
@@ -363,6 +361,7 @@ const NewRoutinePage = () => {
           style={{ width: "90%" }}
         >
           <Button
+            id="buttonAddBlock"
             variant="primary-surface-8dp text-primary-white mb-5"
             onClick={() => {
               addBlockToRoutine();
