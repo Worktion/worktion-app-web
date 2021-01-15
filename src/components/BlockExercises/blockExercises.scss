@@ -1,5 +1,9 @@
 @use "../../components/App/App";
 
+.modal-content{
+  background-color: map_get(App.$theme-colors, "black-background");
+}
+
 .block-exercises {
   width: 100%;
   background-color: rgb(255, 255, 255, 0.05);
