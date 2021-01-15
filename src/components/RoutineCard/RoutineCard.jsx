@@ -95,7 +95,6 @@ const RoutineCard = ({
               title=""
               variant="transparent text-primary-white border-0 btn-toogle-down"
             >
-              <Dropdown.Item>Editar rutina</Dropdown.Item>
               <Dropdown.Item onClick={() => handleShowDetail(routine)}>
                 Ver detalle de rutina
               </Dropdown.Item>
