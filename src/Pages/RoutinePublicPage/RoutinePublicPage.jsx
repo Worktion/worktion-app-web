@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { RiFireFill, RiTimeFill } from "@meronex/icons/ri";
-import moment from "moment";
+import { secondsToTime } from "../../helpers/time-helper";
 import { Container, Col, Row, Form, Image } from "react-bootstrap";
 import * as constants from "../../constants/constants";
 import BlockExercises from "../../components/BlockExercises/BlockExercises";
@@ -26,7 +26,6 @@ const RoutinePublicPage = () => {
     };
     fetchRoutinePublic();
   }, []);
-
 
   if (isLoading) {
     return <SpinnerLoading />;
@@ -67,7 +66,7 @@ const RoutinePublicPage = () => {
                       as="textarea"
                       name="description"
                       placeholder="Ingrese la descripción"
-                      style={{maxHeight: "115px"}}
+                      style={{ maxHeight: "115px" }}
                       className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                       disabled={true}
                       defaultValue={routine.description}
@@ -132,9 +131,7 @@ const RoutinePublicPage = () => {
                           className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                           disabled={true}
                           style={{ maxWidth: "120px" }}
-                          defaultValue={moment
-                            .utc(routine.time * 1000)
-                            .format("HH:mm:ss")}
+                          defaultValue={secondsToTime(routine.time)}
                         />
                       </Form.Group>
                     </div>

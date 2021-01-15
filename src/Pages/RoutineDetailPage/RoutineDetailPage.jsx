@@ -4,7 +4,7 @@ import BlockExercises from "../../components/BlockExercises/BlockExercises";
 import Axios from "axios";
 import SpinnerLoading from "../../components/SpinnerLoading/SpinnerLoading";
 import { RiFireFill, RiTimeFill } from "@meronex/icons/ri";
-import moment from "moment";
+import { secondsToTime } from "../../helpers/time-helper";
 import * as constants from "../../constants/constants";
 import { Container, Col, Row, Form, Image } from "react-bootstrap";
 import defaultRoutineImage from "../../images/defaultRoutineImage.jpg";
@@ -168,9 +168,7 @@ const RoutineDetailPage = () => {
                           className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                           disabled={true}
                           style={{ maxWidth: "120px" }}
-                          defaultValue={moment
-                            .utc(routineDetail.time * 1000)
-                            .format("HH:mm:ss")}
+                          defaultValue={secondsToTime(routineDetail.time)}
                         />
                       </Form.Group>
                     </div>

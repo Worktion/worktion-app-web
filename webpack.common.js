@@ -5,7 +5,7 @@ const MiniCSSExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const Dotenv = require("dotenv-webpack");
-const webpack = require("webpack");
+
 module.exports = {
   entry: "./src/index.js",
   output: {
@@ -60,7 +60,6 @@ module.exports = {
       analyzerMode: "disabled",
       openAnalyzer: false,
     }),
-    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
     new Dotenv(),
   ],
 };

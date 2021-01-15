@@ -90,7 +90,7 @@ export function RoutineProvider(props) {
     const request = {
       name: routine.name,
       description: routine.description,
-      time: parseInt(routine.time),
+      time: parseInt(routine.time) * 60,
       is_public: false,
       dificulty: constants.KeyRoutineDifficulties[routine.difficult],
       muscle_group: constants.keyMuscleGroups[routine.muscleGroup],
