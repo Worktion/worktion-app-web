@@ -67,7 +67,9 @@ describe("<NewRoutinePage/>", () => {
 
     document.getElementById("idDropDownMuscleGroup").click();
 
-    fireEvent.click(screen.getByText("Brazos"));
+    await act(async () => {
+      fireEvent.click(screen.getByText("Brazos"));
+    });
 
     await act(async () => {
       fireEvent.click(screen.getByText("Guardar"));
@@ -92,10 +94,14 @@ describe("<NewRoutinePage/>", () => {
     });
 
     document.getElementById("idDropDownMuscleGroup").click();
-    fireEvent.click(screen.getByText("Brazos"));
+    await act(async () => {
+      fireEvent.click(screen.getByText("Brazos"));
+    });
 
     document.getElementById("idDropDownDifficult").click();
-    fireEvent.click(screen.getByText("Novato"));
+    await act(async () => {
+      fireEvent.click(screen.getByText("Novato"));
+    });
 
     await act(async () => {
       fireEvent.click(screen.getByText("Guardar"));
@@ -120,10 +126,14 @@ describe("<NewRoutinePage/>", () => {
     });
 
     document.getElementById("idDropDownMuscleGroup").click();
-    fireEvent.click(screen.getByText("Brazos"));
+    await act(async () => {
+      fireEvent.click(screen.getByText("Brazos"));
+    });
 
     document.getElementById("idDropDownDifficult").click();
-    fireEvent.click(screen.getByText("Novato"));
+    await act(async () => {
+      fireEvent.click(screen.getByText("Novato"));
+    });
 
     fireEvent.change(screen.getByPlaceholderText("Minutos"), {
       target: { value: 35 },
@@ -165,10 +175,14 @@ describe("<NewRoutinePage/>", () => {
     });
 
     document.getElementById("idDropDownMuscleGroup").click();
-    fireEvent.click(screen.getByText("Brazos"));
+    await act(async () => {
+      fireEvent.click(screen.getByText("Brazos"));
+    });
 
     document.getElementById("idDropDownDifficult").click();
-    fireEvent.click(screen.getByText("Novato"));
+    await act(async () => {
+      fireEvent.click(screen.getByText("Novato"));
+    });
 
     fireEvent.change(screen.getByPlaceholderText("Minutos"), {
       target: { value: 35 },
@@ -214,10 +228,14 @@ describe("<NewRoutinePage/>", () => {
     });
 
     document.getElementById("idDropDownMuscleGroup").click();
-    fireEvent.click(screen.getByText("Brazos"));
+    await act(async () => {
+      fireEvent.click(screen.getByText("Brazos"));
+    });
 
     document.getElementById("idDropDownDifficult").click();
-    fireEvent.click(screen.getByText("Novato"));
+    await act(async () => {
+      fireEvent.click(screen.getByText("Novato"));
+    });
 
     fireEvent.change(screen.getByPlaceholderText("Minutos"), {
       target: { value: 35 },
@@ -296,11 +314,21 @@ describe("<NewRoutinePage/>", () => {
       target: { value: 35 },
     });
 
-    document.getElementById("idDropDownMuscleGroup").click();
-    fireEvent.click(screen.getByText("Brazos"));
+    await act(async () => {
+      document.getElementById("idDropDownMuscleGroup").click();
+    });
 
-    document.getElementById("idDropDownDifficult").click();
-    fireEvent.click(screen.getByText("Novato"));
+    await act(async () => {
+      fireEvent.click(screen.getByText("Brazos"));
+    });
+
+    await act(async () => {
+      document.getElementById("idDropDownDifficult").click();
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("Novato"));
+    });
 
     fireEvent.change(screen.getByPlaceholderText("Minutos"), {
       target: { value: 35 },
@@ -360,7 +388,7 @@ describe("<NewRoutinePage/>", () => {
     });
 
     await act(async () => {
-      document.getElementById("repetitions")
+      document.getElementById("repetitions");
     });
 
     mockedAxios.post.mockResolvedValueOnce({
@@ -372,8 +400,9 @@ describe("<NewRoutinePage/>", () => {
     });
 
     expect(
-      screen.getByText("Verifique que la información de cada bloque se encuentre completa.")
+      screen.getByText(
+        "Verifique que la información de cada bloque se encuentre completa."
+      )
     ).toBeInTheDocument();
   });
- 
 });
