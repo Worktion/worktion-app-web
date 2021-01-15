@@ -46,7 +46,7 @@ const RoutineCard = ({
 
   const deleteRoutine = async () => {
     try {
-      await Axios.delete(`/aroutine.id}/`);
+      await Axios.delete(`/api/routines/${routine.id}/`);
       removeRoutine(routine);
     } catch (error) {
       console.log(error);
