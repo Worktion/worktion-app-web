@@ -5,6 +5,7 @@ import { useUser } from "../../context/user-context";
 import ImagePicker from "../../components/ImagePicker/ImagePicker";
 import { useForm } from "react-hook-form";
 import CustomModal from "../../components/CustomModal/CustomModal";
+import defaultProfileImg from "../../images/defaultProfileImg.png";
 
 const EditProfilePage = () => {
   const [data, setData] = useState(null);
@@ -48,7 +49,7 @@ const EditProfilePage = () => {
         <Row>
           <Col xs lg="4">
             <ImagePicker
-              defaultImage={user.cover}
+              defaultImage={user.cover ? user.cover : defaultProfileImg}
               register={register}
             ></ImagePicker>
           </Col>
@@ -181,7 +182,7 @@ const EditProfilePage = () => {
                   maxLength="450"
                   className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
                   defaultValue={user.bio}
-                  style={{maxHeight: "115px"}}
+                  style={{ maxHeight: "115px" }}
                   ref={register({
                     maxLength: {
                       value: 350,
