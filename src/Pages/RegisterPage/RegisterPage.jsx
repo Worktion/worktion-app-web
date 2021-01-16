@@ -104,7 +104,7 @@ const RegisterPage = () => {
                       name="last_name"
                       type="text"
                       placeholder="Ingresa tus apellidos"
-                      maxLength="80"
+                      maxLength="50"
                       ref={register({
                         required: "Este campo es requerido",
                         maxLength: {
@@ -132,7 +132,7 @@ const RegisterPage = () => {
                       name="username"
                       type="text"
                       placeholder="Ingresa tu nombre de usuario"
-                      maxLength="80"
+                      maxLength="40"
                       ref={register({
                         required: "Este campo es requerido",
                         maxLength: {
@@ -221,7 +221,7 @@ const RegisterPage = () => {
                         required: "Este campo es requerido",
                         validate: (value) =>
                           value === getValues("password") ||
-                          "Las contraseñas deben coincidir",
+                          "Las contraseñas deben coincidir", 
                       })}
                     />
                     <Form.Text className="text-muted">

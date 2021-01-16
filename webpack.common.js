@@ -50,7 +50,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
+      template: "./public/index.html",
     }),
     new MiniCSSExtractPlugin({
       filename: "./static/css/[name][fullhash].css",

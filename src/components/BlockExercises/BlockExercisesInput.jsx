@@ -70,6 +70,7 @@ const BlockExercisesInput = ({
               id="repetitions"
               type="number"
               min="1"
+              max="15"
               className="bg-primary-surface-8dp text-primary-white border-0 pl-2"
               onChange={handleChange}
               style={{ maxWidth: "6rem", height: "2rem" }}
