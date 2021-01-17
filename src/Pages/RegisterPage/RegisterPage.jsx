@@ -26,7 +26,10 @@ const RegisterPage = () => {
   };
 
   const closeError = () => {
-    setAlert(null);
+    setAlert({
+      message: null,
+      type: "",
+    });
   };
 
   const handleSignupClick = async (data) => {
@@ -221,7 +224,7 @@ const RegisterPage = () => {
                         required: "Este campo es requerido",
                         validate: (value) =>
                           value === getValues("password") ||
-                          "Las contraseñas deben coincidir", 
+                          "Las contraseñas deben coincidir",
                       })}
                     />
                     <Form.Text className="text-muted">

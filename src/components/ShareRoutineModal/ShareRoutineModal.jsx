@@ -3,13 +3,31 @@ import Axios from "axios";
 import { Modal, InputGroup, FormControl, Row, Button, Col } from "react-bootstrap"
 import UserOccupantItem from "./UserOccupantItem";
 import SpinnerLoading from "../../components/SpinnerLoading/SpinnerLoading";
+import CustomAlert from "../../components/Alert/CustomAlert";
 import SearchUsersModal from "./SearchUsersModal";
 
 const ShareRoutineModal = ({ show, handleClose, routine }) => {
     const [occupants, setOccupants] = useState([]);
     const [publicRoutine, setPublicRoutine] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [alert, setAlert] = useState({
+        message: "",
+        type: "",
+    });
 
+    const showAlert = (message, type) => {
+        setAlert({
+            message: message,
+            type: type,
+        });
+    };
+
+    const closeError = () => {
+        setAlert({
+            message: null,
+            type: "",
+        });
+    };
 
 
     useEffect(() => {
@@ -95,10 +113,23 @@ const ShareRoutineModal = ({ show, handleClose, routine }) => {
     const createPublicLink = () => {
         fecthCreatePublicLink(routine.id);
     };
-
-    const addNewOccupant = (user) =>{
-        if(fecthShareRoutineToOccupant(routine.id, user.email)){
-            console.log("Compartiendo rutina a: "+ user.email);
+    const isRoutineAlreadySharedToUser = (newOccupant) => {
+        var userExist = false;
+        occupants.forEach(user => {
+            if(user.occupant.email == newOccupant.email){
+                userExist = true;
+            }
+        });
+        return userExist;
+    }
+    const addNewOccupant = (user) => {
+        if(isRoutineAlreadySharedToUser(user)){
+            showAlert("Rutina ya compartida a este usuario", "danger");
+            return;
+        }
+        
+        if (fecthShareRoutineToOccupant(routine.id, user.email)) {
+            console.log("Compartiendo rutina a: " + user.email);
         }
     };
 
@@ -115,6 +146,11 @@ const ShareRoutineModal = ({ show, handleClose, routine }) => {
                     <Modal.Title>Compartir</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <CustomAlert
+                        variant={alert.type}
+                        content={alert.message}
+                        closeError={closeError}
+                    ></CustomAlert>
                     <div className="container-md">
                         <h4>Compartida con otros usuarios</h4>
                         <Row className="justify-content-end">
